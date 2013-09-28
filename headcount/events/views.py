@@ -127,14 +127,20 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
     model = models.RSVP
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        If a user who has already rsvp gets here, redirect them to the
+        update view.
+        """
         try:
-            self.model.objects.get(event__shortid=kwargs.get('slug'),
-                                   user=request.user)
+            rsvp = self.model.objects.select_related('event').get(
+                event__shortid=kwargs.get('slug'), user=request.user)
         except self.model.DoesNotExist:
             return super(EventDetailRSVP, self).dispatch(
                 request, *args, **kwargs)
 
-        raise Exception("TODO: SEND USER TO UPDATE VIEW")
+        return HttpResponseRedirect(
+            reverse_lazy('events:update_rsvp',
+                         kwargs={'slug': rsvp.event.shortid}))
 
     def get_context_data(self, **kwargs):
         """
