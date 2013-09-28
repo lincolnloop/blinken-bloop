@@ -7,7 +7,6 @@ from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
-from authtools.views import LogoutView
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
 from headcount.forms import HeadcountUserCreationForm
@@ -48,6 +47,7 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
     form_class = forms.EventForm
     form_valid_message = u'Your event was updated!'
     model = models.Event
+    slug_field = 'shortid'
     success_url = reverse_lazy('events:dashboard')
 
     def get_queryset(self):
@@ -63,6 +63,7 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
 
 class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
     model = models.Event
+    slug_field = 'shortid'
     success_url = reverse_lazy('events:dashboard')
 
     def get_queryset(self):

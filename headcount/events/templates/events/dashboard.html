@@ -19,8 +19,8 @@
                     <p><strong>Total:</strong> {{ event.rsvps.all|length }}/{{ event.max_attendees }}</p>
                 </div>
                 <div class="panel-footer">
-                    <a href="{% url 'events:edit' event.pk %}">Edit</a>
-                    <a href="{% url 'events:delete' event.pk %}" class="text-danger pull-right">Delete</a>
+                    <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+                    <a href="{% url 'events:delete' event.shortid %}" class="text-danger pull-right">Delete</a>
                 </div>
             </div>
         </article>
