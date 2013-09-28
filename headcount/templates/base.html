@@ -17,11 +17,19 @@
             {% if user.is_authenticated %}
                 <p><a href="{% url 'events:dashboard' %}">Dashboard</a></p>
             {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissable alert-{{ message.tags }}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
 
         <div class="content">
-        {% block content %}
-        {% endblock content %}
+            {% block content %}{% endblock content %}
         </div>
     </div>
 </body>
