@@ -106,3 +106,7 @@ class EventWizard(SessionWizardView):
             self.request, _('Your event and account have been created!'))
 
         return HttpResponseRedirect(reverse_lazy('events:dashboard'))
+
+
+class EventDetail(LoginRequiredMixin, generic.DetailView):
+    model = models.Event
