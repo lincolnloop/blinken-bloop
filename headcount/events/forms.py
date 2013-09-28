@@ -41,9 +41,6 @@ class EventForm(forms.ModelForm):
                 Div(u'country', css_class=u'col-xs-12 col-md-4'),
                 css_class=u'row'
             ),
-        ),
-        FormActions(
-            Submit('save', _('Create your event'), css_class=u'primary')
         )
     )
 

@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block scripts %}
+    {{ wizard.form.media }}
+{% endblock %}
+
 {% block content %}
-    {% crispy form %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {{ wizard.form|crispy }}
+
+        <div class="form-actions row">
+            {% if wizard.steps.prev %}
+                <div class="col-md-6 col-xs-12">
+                    <button name="wizard_goto_step" type="submit" class="btn btn-large btn-block" value="{{ wizard.steps.prev }}">Back</button>
+                </div>
+                <div class="col-md-6 col-xs-12">
+            {% endif %}
+            <input type="submit" value="Save" class="btn btn-primary btn-large btn-block">
+            {% if wizard.steps.prev %}</div>{% endif %}
+        </div>
+    </form>
 {% endblock %}
