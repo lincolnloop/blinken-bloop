@@ -72,6 +72,11 @@ class EventWizard(SessionWizardView):
         })
         return super(EventWizard, cls).as_view(*args, **kwargs)
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(reverse_lazy('events:create'))
+        return super(EventWizard, self).dispatch(request, *args, **kwargs)
+
     def get_form_kwargs(self, step):
         return {
             'render_form_tag': False,
