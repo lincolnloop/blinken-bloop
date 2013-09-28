@@ -16,6 +16,7 @@
             <img src="/static/img/logo.png">
             {% if user.is_authenticated %}
                 <p><a href="{% url 'events:dashboard' %}">Dashboard</a></p>
+                <p><a href="{% url 'events:create' %}">Create an event</a></p>
             {% endif %}
 
             {% if messages %}
