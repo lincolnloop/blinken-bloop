@@ -8,6 +8,7 @@ except NotImplementedError:
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -94,6 +95,9 @@ class Event(TimeStampedModel, TimeFramedModel):
 
         super(Event, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse_lazy('events:detail', kwargs={'slug': self.shortid})
+
 
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
@@ -111,6 +115,7 @@ class RSVP(TimeStampedModel):
     objects = PassThroughManager.for_queryset_class(RSVPQuerySet)()
 
     class Meta:
+        unique_together = ('event', 'user')
         verbose_name = _('RSVP')
         verbose_name_plural = _('RSVPs')
 

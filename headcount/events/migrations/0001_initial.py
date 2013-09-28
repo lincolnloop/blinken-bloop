@@ -42,8 +42,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'events', ['RSVP'])
 
+        # Adding unique constraint on 'RSVP', fields ['event', 'user']
+        db.create_unique(u'events_rsvp', ['event_id', 'user_id'])
+
 
     def backwards(self, orm):
+        # Removing unique constraint on 'RSVP', fields ['event', 'user']
+        db.delete_unique(u'events_rsvp', ['event_id', 'user_id'])
+
         # Deleting model 'Event'
         db.delete_table(u'events_event')
 
@@ -106,7 +112,7 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
         u'events.rsvp': {
-            'Meta': {'object_name': 'RSVP'},
+            'Meta': {'unique_together': "(('event', 'user'),)", 'object_name': 'RSVP'},
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             'event': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'rsvps'", 'to': u"orm['events.Event']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

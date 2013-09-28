@@ -123,8 +123,18 @@ class EventWizard(SessionWizardView):
 class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
                       generic.CreateView):
     form_class = forms.RSVPForm
+    form_valid_message = u'Thanks for RSVPing!'
     model = models.RSVP
-    slug_field = 'shortid'
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.model.objects.get(event__shortid=kwargs.get('slug'),
+                                   user=request.user)
+        except self.model.DoesNotExist:
+            return super(EventDetailRSVP, self).dispatch(
+                request, *args, **kwargs)
+
+        raise Exception("TODO: SEND USER TO UPDATE VIEW")
 
     def get_context_data(self, **kwargs):
         """
@@ -132,7 +142,7 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         If requesting user is the host, don't display an rsvp form.
         """
         context = super(EventDetailRSVP, self).get_context_data(**kwargs)
-        context.update({'event': self.get_object()})
+        context.update({'event': self.get_event()})
 
         if self.request.user == context['event'].host:
             del context['form']
@@ -142,8 +152,11 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
     def get_form_kwargs(self):
         """ Add event and user to the form """
         kwargs = super(EventDetailRSVP, self).get_form_kwargs()
-        kwargs.update({'event': self.get_object(), 'user': self.request.user})
+        kwargs.update({'event': self.get_event(), 'user': self.request.user})
         return kwargs
 
-    def get_object(self, queryset=None):
+    def get_event(self):
         return get_object_or_404(models.Event, shortid=self.kwargs.get('slug'))
+
+    def get_success_url(self):
+        return self.get_event().get_absolute_url()
