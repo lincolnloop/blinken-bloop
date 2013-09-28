@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+
+    {% for event in object_list %}
+        <div class="col-md-6 col-xs-12">
+            <h3>{{ event.title }}</h3>
+            <p><strong>RSVPs</strong> {{ event.rsvps.all|length }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

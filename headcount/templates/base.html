@@ -14,6 +14,9 @@
     <div class="container">
         <div class="header">
             <img src="/static/img/logo.png">
+            {% if user.is_authenticated %}
+                <p><a href="{% url 'events:dashboard' %}">Dashboard</a></p>
+            {% endif %}
         </div>
 
         <div class="content">

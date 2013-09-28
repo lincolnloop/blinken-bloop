@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponse
-from django.views.generic import FormView, View
+from django.views.generic import FormView, ListView
 
 from braces.views import LoginRequiredMixin
 
@@ -14,6 +13,9 @@ class Home(FormView):
     template_name = 'home.html'
 
 
-class Dashboard(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse('DASHBOARD!')
+class Dashboard(LoginRequiredMixin, ListView):
+    model = models.Event
+    template_name = 'events/dashboard.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(host=self.request.user)
