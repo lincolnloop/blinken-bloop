@@ -35,9 +35,9 @@
             {% if user.is_authenticated %}
                 <li><a href="{% url 'events:dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'events:create' %}">Create an event</a></li>
-                <li><a href="{% url 'events:dashboard' %}">Logout</a></li>
+                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
             {% else %}
-                <li><a href="{% url 'events:dashboard' %}">Login</a></li>
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
