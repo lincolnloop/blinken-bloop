@@ -8,11 +8,11 @@
 {% block content %}
     <h1>Want to track RSVPs for an event you're running?</h1>
     <h2>Get started here:</h2>
-    
+
     <form action="" method="post">
         {% csrf_token %}
         {{ wizard.management_form }}
-        {{ wizard.form|crispy }}
+        {% crispy wizard.form %}
 
         <div class="form-actions row">
             {% if wizard.steps.prev %}

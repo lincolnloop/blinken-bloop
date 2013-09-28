@@ -22,6 +22,7 @@ class EventForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         show_actions = kwargs.pop('show_actions', None)
+        render_form_tag = kwargs.pop('render_form_tag', True)
         super(EventForm, self).__init__(*args, **kwargs)
 
         actions = HTML('')
@@ -41,6 +42,8 @@ class EventForm(forms.ModelForm):
             )
 
         self.helper = FormHelper()
+        self.helper.form_method = u'POST'
+        self.helper.form_tag = render_form_tag
         self.helper.layout = Layout(
             Fieldset(
                 u'',

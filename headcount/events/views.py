@@ -72,6 +72,9 @@ class EventWizard(SessionWizardView):
         })
         return super(EventWizard, cls).as_view(*args, **kwargs)
 
+    def get_form_kwargs(self, step):
+        return {'render_form_tag': False}
+
     def done(self, form_list, **kwargs):
         event_form = form_list[0]
         user_form = form_list[1]
