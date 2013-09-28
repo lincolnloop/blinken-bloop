@@ -6,7 +6,24 @@ from django.utils.translation import ugettext_lazy as _
 import misaka
 
 from model_utils import Choices
+from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel, TimeFramedModel
+
+
+class EventQuerySet(models.query.QuerySet):
+    def by_host(self, host):
+        return self.filter(host=host)
+
+
+class RSVPQuerySet(models.query.QuerySet):
+    def coming(self):
+        return self.filter(response=RSVP.RESPONSE_CHOICES.yes)
+
+    def not_coming(self):
+        return self.filter(response=RSVP.RESPONSE_CHOICES.no)
+
+    def maybe(self):
+        return self.filter(response=RSVP.RESPONSE_CHOICES.maybe)
 
 
 class Event(TimeStampedModel, TimeFramedModel):
@@ -33,6 +50,7 @@ class Event(TimeStampedModel, TimeFramedModel):
         help_text=_('Leave blank for no limit'), null=True)
     cost = models.CharField(_('Event cost'), blank=True, default='',
                             max_length=150)
+    objects = PassThroughManager.for_queryset_class(EventQuerySet)()
 
     class Meta:
         ordering = ['start', 'end', 'title']
@@ -59,6 +77,7 @@ class RSVP(TimeStampedModel):
     name = models.CharField(_('Your name'), max_length=255)
     email = models.EmailField(_('Your email'))
     notes = models.TextField(_('Any notes for the organizer'), blank=True)
+    objects = PassThroughManager.for_queryset_class(RSVPQuerySet)()
 
     class Meta:
         verbose_name = _('RSVP')

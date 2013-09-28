@@ -4,9 +4,21 @@
     <h2>Dashboard</h2>
 
     {% for event in object_list %}
-        <div class="col-md-6 col-xs-12">
-            <h3>{{ event.title }}</h3>
-            <p><strong>RSVPs</strong> {{ event.rsvps.all|length }}</p>
-        </div>
+        <article class="col-md-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ event.title }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ event.venue_name }}</p>
+                    <p>{{ event.start }} &ndash; {{ event.end }}</p>
+                    <h4>RSVPs</h4>
+                    <p><strong>Yes:</strong> {{ event.rsvps.coming|length }}</p>
+                    <p><strong>No:</strong> {{ event.rsvps.not_coming|length }}</p>
+                    <p><strong>Maybe:</strong> {{ event.rsvps.maybe|length }}</p>
+                    <p><strong>Total:</strong> {{ event.rsvps.all|length }}</p>
+                </div>
+            </div>
+        </article>
     {% endfor %}
 {% endblock %}
