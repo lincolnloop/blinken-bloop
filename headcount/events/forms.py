@@ -44,6 +44,7 @@ class EventForm(forms.ModelForm):
             'vendor/pickadate/js/picker.date.js',
             'vendor/pickadate/js/picker.time.js',
             'vendor/pickadate/js/legacy.js',
+            'js/forms.js'
         )
 
     def __init__(self, *args, **kwargs):

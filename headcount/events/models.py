@@ -40,14 +40,17 @@ class RSVPQuerySet(models.query.QuerySet):
 class Event(TimeStampedModel, TimeFramedModel):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                              related_name='events')
-    title = models.CharField(_('What do you want to call this event?'),
+    title = models.CharField(_('Event title:'),
                              max_length=500)
     description = models.TextField(
         _("What's the event about?"),
         help_text=_('You should include contact details in the description. '
                     'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
-    location = models.CharField(_("Where's the event?"), max_length=750)
+    location = models.CharField(
+        _("Where's the event?"), 
+        help_text=_("Address, IRC channel, or just 'My house'"), 
+        max_length=750)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
     max_attendees = models.PositiveIntegerField(
