@@ -22,6 +22,7 @@ class Event(TimeStampedModel, TimeFramedModel):
     address2 = models.CharField(blank=True, max_length=255)
     city = models.CharField(max_length=255)
     state = models.CharField(_('State/Province'), max_length=255)
+    country = models.CharField(_('Country'), max_length=255)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
     max_attendees = models.PositiveIntegerField(

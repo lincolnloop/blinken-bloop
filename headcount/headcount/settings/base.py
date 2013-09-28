@@ -123,6 +123,8 @@ THIRD_PARTY_APPS = (
     'south',
     'authtools',
     'discover_runner',
+    'crispy_forms',
+    'floppyforms',
 )
 LOCAL_APPS = (
     'events',
@@ -132,6 +134,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 AUTH_USER_MODEL = 'authtools.User'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
