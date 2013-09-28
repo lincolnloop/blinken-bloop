@@ -60,12 +60,12 @@ class EventForm(forms.ModelForm):
                     HTML('<a href="{0}" class="btn btn-lg btn-block btn-link">'
                          'Nevermind</a>'.format(
                              reverse_lazy('events:dashboard'))),
-                    css_class='col-xs-12 col-md-4'
+                    css_class='col-xs-12 col-md-6'
                 ),
                 Div(
                     Submit('save', _('Create'),
                            css_class='primary btn-lg btn-block'),
-                    css_class='col-xs-12 col-md-4'
+                    css_class='col-xs-12 col-md-6'
                 )
             )
 
