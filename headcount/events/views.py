@@ -6,8 +6,8 @@ from django.http import HttpResponseRedirect
 from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from django.views.generic.edit import FormMixin
 
-from authtools.views import LogoutView
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
 from headcount.forms import HeadcountUserCreationForm
@@ -113,5 +113,7 @@ class EventWizard(SessionWizardView):
         return HttpResponseRedirect(reverse_lazy('events:dashboard'))
 
 
-class EventDetail(LoginRequiredMixin, generic.DetailView):
+class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin, FormMixin,
+                      generic.DetailView):
+    form_class = forms.RSVPForm
     model = models.Event

@@ -71,7 +71,7 @@ class EventForm(forms.ModelForm):
         self.helper.form_method = u'POST'
         self.helper.form_tag = render_form_tag
         self.helper.label_class = 'col-lg-2'
-        self.helper.field_class= 'col-lg-10'
+        self.helper.field_class = 'col-lg-10'
         self.helper.layout = Layout(
             Fieldset(
                 u'',
@@ -90,6 +90,37 @@ class EventForm(forms.ModelForm):
                     Div(u'cost', css_class=u'col-xs-12 col-md-4'),
                     css_class=u'row'
                 ),
+            ),
+            actions
+        )
+
+
+class RSVPForm(forms.ModelForm):
+    class Meta:
+        model = models.RSVP
+
+    def __init__(self, *args, **kwargs):
+        super(RSVPForm, self).__init__(*args, **kwargs)
+
+        actions = FormActions(
+            Div(
+                Submit('save', _('RSVP'),
+                       css_class='primary btn-lg btn-block'),
+                css_class='col-xs-12 col-md-6'
+            )
+        )
+
+        self.helper = FormHelper()
+        self.helper.form_method = u'POST'
+        self.helper.form_tag = True
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-10'
+        self.helper.layout = Layout(
+            Fieldset(
+                u'',
+                u'response',
+                u'num_guests',
+                u'notes',
             ),
             actions
         )

@@ -12,6 +12,6 @@ urlpatterns = patterns(
         name='edit'),
     url(r'^event/delete/(?P<pk>\d+)/$', views.DeleteEvent.as_view(),
         name='delete'),
-    url(r'event/detail/(?P<pk>\d+)/$', views.EventDetail.as_view(),
+    url(r'event/detail/(?P<slug>[\w]+)/$', views.EventDetailRSVP.as_view(),
         name='detail'),
 )
