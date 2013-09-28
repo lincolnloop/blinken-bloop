@@ -48,6 +48,7 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
     form_class = forms.EventForm
     form_valid_message = u'Your event was updated!'
     model = models.Event
+    slug_field = 'shortid'
     success_url = reverse_lazy('events:dashboard')
 
     def get_queryset(self):
@@ -63,6 +64,7 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
 
 class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
     model = models.Event
+    slug_field = 'shortid'
     success_url = reverse_lazy('events:dashboard')
 
     def get_queryset(self):
@@ -117,3 +119,4 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin, FormMixin,
                       generic.DetailView):
     form_class = forms.RSVPForm
     model = models.Event
+    slug_field = 'shortid'

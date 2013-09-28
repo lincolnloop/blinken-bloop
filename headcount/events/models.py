@@ -1,3 +1,11 @@
+import random as _random
+import string
+
+try:
+    random = _random.SystemRandom()
+except NotImplementedError:
+    random = _random.Random()
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -9,6 +17,10 @@ import misaka
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel, TimeFramedModel
+
+
+def get_shortid(length=6, alphabet=string.letters+string.digits):
+    return u''.join([random.choice(alphabet) for i in xrange(length)])
 
 
 class EventQuerySet(models.query.QuerySet):
@@ -40,14 +52,17 @@ class RSVPQuerySet(models.query.QuerySet):
 class Event(TimeStampedModel, TimeFramedModel):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                              related_name='events')
-    title = models.CharField(_('What do you want to call this event?'),
+    title = models.CharField(_('Event title:'),
                              max_length=500)
     description = models.TextField(
         _("What's the event about?"),
         help_text=_('You should include contact details in the description. '
                     'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
-    location = models.CharField(_("Where's the event?"), max_length=750)
+    location = models.CharField(
+        _("Where's the event?"), 
+        help_text=_("Address, IRC channel, or just 'My house'"), 
+        max_length=750)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
     max_attendees = models.PositiveIntegerField(
@@ -58,6 +73,7 @@ class Event(TimeStampedModel, TimeFramedModel):
         help_text=_('Leave blank for no limit'), null=True)
     cost = models.CharField(_('Do people need to bring anything or pay?'),
                             blank=True, default='', max_length=150)
+    shortid = models.CharField(blank=True, default='', max_length=10)
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
 
     class Meta:
@@ -68,6 +84,14 @@ class Event(TimeStampedModel, TimeFramedModel):
 
     def save(self, *args, **kwargs):
         self.description_html = misaka.html(self.description)
+        self.shortid = get_shortid()
+
+        try:
+            while Event.objects.get(shortid=self.shortid):
+                self.shortid = get_shortid()
+        except Event.DoesNotExist:
+            pass
+
         super(Event, self).save(*args, **kwargs)
 
 
