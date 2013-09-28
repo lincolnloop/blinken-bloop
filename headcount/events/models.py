@@ -51,6 +51,9 @@ class RSVPQuerySet(models.query.QuerySet):
     def maybe(self):
         return self.filter(response=RSVP.RESPONSE_CHOICES.maybe)
 
+    def possible(self):
+        return self.exclude(response=RSVP.RESPONSE_CHOICES.no)
+
 
 class Event(TimeStampedModel, TimeFramedModel):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
