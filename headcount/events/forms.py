@@ -26,8 +26,8 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
         widgets = {
-            'max_attendees': forms.NumberInput,
-            'max_guests': forms.NumberInput,
+            'max_attendees': forms.NumberInput(attrs={'min': '0', 'max': '9999'}),
+            'max_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
             'host': forms.HiddenInput
         }
 
@@ -81,14 +81,14 @@ class EventForm(forms.ModelForm):
                 u'location',
                 u'description',
                 Div(
-                    Div(u'start', css_class=u'col-xs-12 col-md-4'),
-                    Div(u'end', css_class=u'col-xs-12 col-md-4'),
+                    Div(u'start', css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'end', css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     css_class=u'row'
                 ),
                 Div(
-                    Div(u'max_attendees', css_class=u'col-xs-12 col-md-4'),
-                    Div(u'max_guests', css_class=u'col-xs-12 col-md-4'),
-                    Div(u'cost', css_class=u'col-xs-12 col-md-4'),
+                    Div(u'max_attendees', css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'max_guests', css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'cost', css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     css_class=u'row'
                 ),
             ),

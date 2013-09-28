@@ -1,7 +1,7 @@
 @standard-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
 @bg-color: #222;
 @teal: #4dd2ff;
-@light-teal: #aaeaff;
+@fuchsia: #ff33a0;
 
 body {
     font-family: @standard-font;
@@ -16,8 +16,8 @@ a {
     color: @teal;
 
     &:hover {
-        color: @light-teal;
-        text-decoration: underline;
+        color: @fuchsia;
+        text-decoration: none;
     }
 }
 
@@ -44,12 +44,24 @@ h2 {
 
     li a:hover {
         background: none;
-        text-decoration: underline;
     }
 }
 
 .logo {   
     height: 40px;
+}
+
+.btn-primary {
+    background-image: none;
+    background-color: @teal;
+    color: @bg-color;
+    border: 1pt solid darken(@teal, 20%);
+
+    &:hover {
+        background-color: @fuchsia;
+        border: 1pt solid darken(@fuchsia, 20%);
+        color: black;
+    }
 }
 
 .footer {

@@ -71,7 +71,7 @@ class Event(TimeStampedModel, TimeFramedModel):
     max_guests = models.PositiveIntegerField(
         _('How many guests can people bring?'), blank=True,
         help_text=_('Leave blank for no limit'), null=True)
-    cost = models.CharField(_('Do people need to bring anything or pay?'),
+    cost = models.CharField(_('Do people need to bring anything, or pay?'),
                             blank=True, default='', max_length=150)
     shortid = models.CharField(blank=True, default='', max_length=10)
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
