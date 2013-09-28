@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -49,8 +50,14 @@ class RSVP(TimeStampedModel):
         _("Are you coming?"), choices=RESPONSE_CHOICES, max_length=10)
     name = models.CharField(_("Your name"), max_length=255)
     email = models.EmailField(_("Your email"))
-    notes = models.TextField(_("Any notes for the organizer"))
+    notes = models.TextField(_("Any notes for the organizer"), blank=True)
 
     class Meta:
         verbose_name = _("RSVP")
         verbose_name_plural = _("RSVPs")
+
+    def clean(self):
+        if self.num_guests > self.event.max_guests:
+            raise ValidationError(
+                _("The event only allows {0.event.max_guests} "
+                  "guest(s).".format(self)))
