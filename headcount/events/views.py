@@ -160,3 +160,15 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
 
     def get_success_url(self):
         return self.get_event().get_absolute_url()
+
+
+class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
+                 generic.UpdateView):
+    form_class = forms.RSVPForm
+    form_valid_message = u'Your RSVP has been updated!'
+    model = models.RSVP
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model,
+                                event__shortid=self.kwargs.get('slug'),
+                                user=self.request.user)
