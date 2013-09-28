@@ -95,6 +95,15 @@ class EventForm(forms.ModelForm):
             actions
         )
 
+    def clean_end(self):
+        data = self.cleaned_data['end']
+        start = self.cleaned_data['start']
+
+        if data < start:
+            raise forms.ValidationError(
+                _("Events can't end before they've started."))
+        return data
+
 
 class RSVPForm(forms.ModelForm):
     class Meta:
