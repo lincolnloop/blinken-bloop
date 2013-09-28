@@ -10,20 +10,27 @@ from model_utils.models import TimeStampedModel, TimeFramedModel
 
 
 class Event(TimeStampedModel, TimeFramedModel):
-    host = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="events")
-    title = models.CharField(_("Event name"), max_length=500)
+    host = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='events')
+    title = models.CharField(_('Event name'), max_length=500)
     description = models.TextField(
-        _("Event description"),
-        help_text=_("You should include contact details in the description. "
-                    "Markdown is supported."))
+        _('Event description'),
+        help_text=_('You should include contact details in the description. '
+                    'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
+    venue_name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    address2 = models.CharField(blank=True, max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(_('State/Province'), max_length=255)
+    latitude = models.FloatField(blank=True, editable=False, null=True)
+    longitude = models.FloatField(blank=True, editable=False, null=True)
     max_attendees = models.PositiveIntegerField(
-        _("Max # of attendees"), blank=True,
-        help_text=_("Leave blank for no limit"), null=True)
+        _('Max # of attendees'), blank=True,
+        help_text=_('Leave blank for no limit'), null=True)
     max_guests = models.PositiveIntegerField(
-        _("Max # of guests per attendee"), blank=True,
-        help_text=_("Leave blank for no limit"), null=True)
-    cost = models.CharField(_("Event cost"), blank=True, default='',
+        _('Max # of guests per attendee'), blank=True,
+        help_text=_('Leave blank for no limit'), null=True)
+    cost = models.CharField(_('Event cost'), blank=True, default='',
                             max_length=150)
 
     class Meta:
@@ -43,21 +50,21 @@ class RSVP(TimeStampedModel):
         ('no', 'No'),
         ('maybe', 'Maybe')
     )
-    event = models.ForeignKey(Event, related_name="rsvps")
+    event = models.ForeignKey(Event, related_name='rsvps')
     num_guests = models.PositiveIntegerField(
-        _("How many guests are you bringing?"), default=0)
+        _('How many guests are you bringing?'), default=0)
     response = models.CharField(
-        _("Are you coming?"), choices=RESPONSE_CHOICES, max_length=10)
-    name = models.CharField(_("Your name"), max_length=255)
-    email = models.EmailField(_("Your email"))
-    notes = models.TextField(_("Any notes for the organizer"), blank=True)
+        _('Are you coming?'), choices=RESPONSE_CHOICES, max_length=10)
+    name = models.CharField(_('Your name'), max_length=255)
+    email = models.EmailField(_('Your email'))
+    notes = models.TextField(_('Any notes for the organizer'), blank=True)
 
     class Meta:
-        verbose_name = _("RSVP")
-        verbose_name_plural = _("RSVPs")
+        verbose_name = _('RSVP')
+        verbose_name_plural = _('RSVPs')
 
     def clean(self):
         if self.num_guests > self.event.max_guests:
             raise ValidationError(
-                _("The event only allows {0.event.max_guests} "
-                  "guest(s).".format(self)))
+                _('The event only allows {0.event.max_guests} '
+                  'guest(s).'.format(self)))
