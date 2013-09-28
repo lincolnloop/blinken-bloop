@@ -1,3 +1,4 @@
 env/*
 *.pyc
 *~
+headcount/headcount/settings/local.py
