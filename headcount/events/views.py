@@ -15,10 +15,6 @@ from . import forms
 from . import models
 
 
-class CustomLogoutView(LogoutView):
-    url = reverse_lazy('events:home')
-
-
 class Dashboard(LoginRequiredMixin, generic.ListView):
     model = models.Event
     template_name = 'events/dashboard.html'

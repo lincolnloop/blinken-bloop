@@ -70,6 +70,8 @@ class EventForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
         self.helper.form_tag = render_form_tag
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class= 'col-lg-10'
         self.helper.layout = Layout(
             Fieldset(
                 u'',
@@ -83,11 +85,11 @@ class EventForm(forms.ModelForm):
                     css_class=u'row'
                 ),
                 Div(
-                    Div(u'max_attendees', css_class=u'col-xs-12 col-md-6'),
-                    Div(u'max_guests', css_class=u'col-xs-12 col-md-6'),
+                    Div(u'max_attendees', css_class=u'col-xs-12 col-md-4'),
+                    Div(u'max_guests', css_class=u'col-xs-12 col-md-4'),
+                    Div(u'cost', css_class=u'col-xs-12 col-md-4'),
                     css_class=u'row'
                 ),
-                u'cost'
             ),
             actions
         )
