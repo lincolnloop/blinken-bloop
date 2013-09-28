@@ -1,6 +1,27 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block scripts %}
+    {{ form.media }}
+{% endblock %}
+
 {% block content %}
     {% crispy form %}
+{% endblock %}
+
+{% block end_body_js %}
+<script>
+    $('form input[type=date]').pickadate({
+        format: 'mm/dd/yyyy'
+    });
+    $('form input[type=time]').pickatime({
+        format: 'h:i A',
+        interval: 15,
+        onOpen: function() {
+            if (!this.get('value')) {
+                this.set('highlight', [12, 0]);
+            }
+        }
+    });
+</script>
 {% endblock %}
