@@ -23,3 +23,20 @@
         </div>
     </form>
 {% endblock %}
+
+{% block end_body_js %}
+<script>
+    $('#id_0-start_0, #id_0-end_0').pickadate({
+        format: 'mm/dd/yyyy'
+    });
+    $('#id_0-start_1, #id_0-end_1').pickatime({
+        format: 'h:i A',
+        interval: 15,
+        onOpen: function() {
+            if (!this.get('value')) {
+                this.set('highlight', [12, 0]);
+            }
+        }
+    });
+</script>
+{% endblock %}

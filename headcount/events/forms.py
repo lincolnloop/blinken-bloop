@@ -7,8 +7,19 @@ import floppyforms as forms
 
 from . import models
 
+TIME_FORMAT = '%H:%M %p'
+
 
 class EventForm(forms.ModelForm):
+    start = forms.SplitDateTimeField(
+        input_time_formats=[TIME_FORMAT],
+        widget=forms.SplitDateTimeWidget(time_format=TIME_FORMAT)
+    )
+    end = forms.SplitDateTimeField(
+        input_time_formats=[TIME_FORMAT],
+        widget=forms.SplitDateTimeWidget(time_format=TIME_FORMAT)
+    )
+
     helper = FormHelper()
     helper.layout = Layout(
         Fieldset(
@@ -52,3 +63,18 @@ class EventForm(forms.ModelForm):
             'max_attendees': forms.NumberInput,
             'max_guests': forms.NumberInput,
         }
+
+    class Media:
+        css = {
+            'screen': (
+                'vendor/pickadate/css/default.css',
+                'vendor/pickadate/css/default.date.css',
+                'vendor/pickadate/css/default.time.css'
+            )
+        }
+        js = (
+            'vendor/pickadate/js/picker.js',
+            'vendor/pickadate/js/picker.date.js',
+            'vendor/pickadate/js/picker.time.js',
+            'vendor/pickadate/js/legacy.js',
+        )
