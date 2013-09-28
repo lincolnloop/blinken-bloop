@@ -1,0 +1,9 @@
+Hi {{ instance.user.name }}!
+
+Just a quick note to say that you responded {{ instance.response }} to the event {{ instance.event.title }} on {{ instance.event.start }}.
+
+If you ever need to change your RSVP, visit http://{{ domain }}{{instance.event.get_absolute_url }}
+
+Thanks!
+
+The Headcount.io Team

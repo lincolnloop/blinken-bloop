@@ -132,3 +132,4 @@ class RSVP(TimeStampedModel):
 
 models.signals.post_save.connect(signals.event_creation, sender=Event)
 models.signals.post_save.connect(signals.event_change, sender=Event)
+models.signals.post_save.connect(signals.rsvp_creation, sender=RSVP)

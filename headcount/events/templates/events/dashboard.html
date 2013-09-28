@@ -8,6 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{ event.title }}</h3>
+                    <p><a href="{{ event.get_absolute_url }}">RSVP URL</a></p>
                 </div>
                 <div class="panel-body">
                     <p>{{ event.location }}</p>

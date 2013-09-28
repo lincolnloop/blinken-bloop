@@ -1,4 +1,4 @@
-Hi {{ instance.user.name }}!
+Hi!
 
 You RSVPed {{ instance.response }} to {{ instance.event.title }} and the event has recently been changed by the host.
 

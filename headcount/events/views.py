@@ -133,7 +133,7 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         """
         try:
             rsvp = self.model.objects.select_related('event').get(
-                event__shortid=kwargs.get('slug'), user=request.user)
+                event__shortid=kwargs.get('slug'), user_id=request.user.pk)
         except self.model.DoesNotExist:
             return super(EventDetailRSVP, self).dispatch(
                 request, *args, **kwargs)

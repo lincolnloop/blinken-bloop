@@ -24,12 +24,27 @@ def event_change(sender, instance, created, raw, **kwargs):
         to_emails = ['{0.name} <{0.email}>'.format(rsvp.user) for rsvp in
                      instance.rsvps.possible()]
         email = generate_email(
-            'events/email/new_event',
+            'events/email/change_event',
             HttpRequest(),
             {
                 'instance': instance,
                 'domain': Site.objects.get_current().domain
             },
             to=to_emails
+        )
+        email.send(fail_silently=False)
+
+
+def rsvp_creation(sender, instance, created, raw, **kwargs):
+    if created and instance.response != instance.RESPONSE_CHOICES.no:
+        to_email = '{0.name} <{0.email}>'.format(instance.user)
+        email = generate_email(
+            'events/email/new_rsvp',
+            HttpRequest(),
+            {
+                'instance': instance,
+                'domain': Site.objects.get_current().domain
+            },
+            to=(to_email,)
         )
         email.send(fail_silently=False)
