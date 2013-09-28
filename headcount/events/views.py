@@ -7,11 +7,16 @@ from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
+from authtools.views import LogoutView
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
 from headcount.forms import HeadcountUserCreationForm
 from . import forms
 from . import models
+
+
+class CustomLogoutView(LogoutView):
+    url = reverse_lazy('events:home')
 
 
 class Dashboard(LoginRequiredMixin, generic.ListView):
