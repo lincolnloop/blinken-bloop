@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from django.views.generic.edit import FormMixin
 
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
@@ -115,8 +115,30 @@ class EventWizard(SessionWizardView):
         return HttpResponseRedirect(reverse_lazy('events:dashboard'))
 
 
-class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin, FormMixin,
-                      generic.DetailView):
+class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
+                      generic.CreateView):
     form_class = forms.RSVPForm
-    model = models.Event
+    model = models.RSVP
     slug_field = 'shortid'
+
+    def get_context_data(self, **kwargs):
+        """
+        Add event to context.
+        If requesting user is the host, don't display an rsvp form.
+        """
+        context = super(EventDetailRSVP, self).get_context_data(**kwargs)
+        context.update({'event': self.get_object()})
+
+        if self.request.user == context['event'].host:
+            del context['form']
+
+        return context
+
+    def get_form_kwargs(self):
+        """ Add event and user to the form """
+        kwargs = super(EventDetailRSVP, self).get_form_kwargs()
+        kwargs.update({'event': self.get_object(), 'user': self.request.user})
+        return kwargs
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(models.Event, shortid=self.kwargs.get('slug'))

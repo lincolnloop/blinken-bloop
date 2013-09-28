@@ -19,7 +19,7 @@ from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel, TimeFramedModel
 
 
-def get_shortid(length=6, alphabet=string.letters+string.digits):
+def get_shortid(length=6, alphabet=string.letters + string.digits):
     return u''.join([random.choice(alphabet) for i in xrange(length)])
 
 
@@ -60,8 +60,8 @@ class Event(TimeStampedModel, TimeFramedModel):
                     'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
     location = models.CharField(
-        _("Where's the event?"), 
-        help_text=_("Address, IRC channel, or just 'My house'"), 
+        _("Where's the event?"),
+        help_text=_("Address, IRC channel, or just 'My house'"),
         max_length=750)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
@@ -106,8 +106,7 @@ class RSVP(TimeStampedModel):
         _('How many guests are you bringing?'), default=0)
     response = models.CharField(
         _('Are you coming?'), choices=RESPONSE_CHOICES, max_length=10)
-    name = models.CharField(_('Your name'), max_length=255)
-    email = models.EmailField(_('Your email'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='rsvps')
     notes = models.TextField(_('Any notes for the organizer'), blank=True)
     objects = PassThroughManager.for_queryset_class(RSVPQuerySet)()
 

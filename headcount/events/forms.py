@@ -101,6 +101,8 @@ class RSVPForm(forms.ModelForm):
         model = models.RSVP
 
     def __init__(self, *args, **kwargs):
+        event = kwargs.pop('event', None)
+        user = kwargs.pop('user', None)
         super(RSVPForm, self).__init__(*args, **kwargs)
 
         actions = FormActions(
@@ -119,9 +121,16 @@ class RSVPForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 u'',
+                u'event',
+                u'user',
                 u'response',
                 u'num_guests',
                 u'notes',
             ),
             actions
         )
+
+        self.fields['event'].initial = event.pk
+        self.fields['event'].widget = forms.HiddenInput()
+        self.fields['user'].initial = user.pk
+        self.fields['user'].widget = forms.HiddenInput()

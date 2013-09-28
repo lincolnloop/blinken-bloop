@@ -11,4 +11,8 @@
     <p>Cost: {{ event.cost }}</p>
     {% endif %}
 </div>
+
+{% if form %}
+    {% crispy form %}
+{% endif %}
 {% endblock %}
