@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 import arrow
@@ -32,7 +33,7 @@ class EventModelTests(TestCase):
 
 
 class RSVPModelTests(TestCase):
-    def test_creation(self):
+    def create_event(self):
         user = create_user()
         event = models.Event.objects.create(
             host=user,
@@ -44,6 +45,10 @@ class RSVPModelTests(TestCase):
             start=arrow.utcnow().datetime,
             end=arrow.utcnow().replace(days=+1).datetime
         )
+        return event
+
+    def test_creation(self):
+        event = self.create_event()
 
         rsvp = models.RSVP.objects.create(
             event=event,
@@ -55,3 +60,15 @@ class RSVPModelTests(TestCase):
 
         self.assertTrue(isinstance(rsvp, models.RSVP))
         self.assertIn(rsvp, event.rsvps.all())
+
+    def test_too_many_guests(self):
+        event = self.create_event()
+        rsvp = models.RSVP.objects.create(
+            event=event,
+            num_guests=100,
+            response=models.RSVP.RESPONSE_CHOICES.yes,
+            name=u'Too Many Guests',
+            email=u'icantcount@example.com'
+        )
+        with self.assertRaises(ValidationError):
+            rsvp.clean()
