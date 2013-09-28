@@ -116,3 +116,4 @@ class EventWizard(SessionWizardView):
 
 class EventDetail(LoginRequiredMixin, generic.DetailView):
     model = models.Event
+    slug_field = 'shortid'
