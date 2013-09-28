@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2>New event</h2>
+    <h2>{% if event %}Edit event{% else %}New event{% endif %}</h2>
     {% crispy form %}
 {% endblock %}
 

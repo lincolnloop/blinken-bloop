@@ -1,12 +1,13 @@
-@standard-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
-@bg-color: #303030;
+@header-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
+@standard-font: 'Merriweather Sans', Arial, sans-serif;
+@bg-color: #222;
 @teal: #4dd2ff;
 @fuchsia: #ff33a0;
 @pink: #ffaaaf;
 
 body {
     font-family: @standard-font;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 12pt;
     background: @bg-color;
     color: white;
@@ -23,7 +24,7 @@ a {
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: @standard-font;
+    font-family: @header-font;
 }
 
 h1 {
@@ -33,7 +34,12 @@ h1 {
 
 h2 {
     font-size: 3rem;
-    font-weight: 300;
+    font-weight: 200;
+}
+
+h3 {
+    font-size: 2.5em;
+    font-weight: 700;
 }
 
 .navbar {
@@ -73,12 +79,22 @@ h2 {
 }
 
 .panel {
-    background: none;
+    background: lighten(@bg-color, 3%);
     border: 1pt solid black;
     .panel-heading, .panel-footer {
         background: black;
         color: white;
         border: none;
+    }
+
+    .panel-heading {
+        h3 {
+            font-size: 2.4rem;
+        }
+    }
+
+    .panel-footer {
+        padding: 5px 15px;
     }
 }
 

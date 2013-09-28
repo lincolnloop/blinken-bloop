@@ -63,7 +63,7 @@ class EventForm(forms.ModelForm):
                     css_class='col-xs-12 col-md-6'
                 ),
                 Div(
-                    Submit('save', _('Create'),
+                    Submit('save', _('Submit'),
                            css_class='primary btn-lg btn-block'),
                     css_class='col-xs-12 col-md-6'
                 )
