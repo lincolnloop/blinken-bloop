@@ -9,7 +9,7 @@
     <h1>Want to track RSVPs for an event you're running?</h1>
     <h2>Get started here:</h2>
 
-    <form action="" method="post">
+    <form class="form-horizontal" action="" method="post">
         {% csrf_token %}
         {{ wizard.management_form }}
         {% crispy wizard.form %}
