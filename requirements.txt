@@ -7,6 +7,7 @@ django-crispy-forms==1.4.0
 django-discover-runner==1.0
 django-floppyforms==1.1
 django-model-utils==1.5.0
+djrill==0.6.0
 misaka==1.0.2
 oauthlib==0.6.0
 psycopg2==2.5.1

@@ -95,14 +95,15 @@ class EventForm(forms.ModelForm):
             actions
         )
 
-    def clean_end(self):
-        data = self.cleaned_data['end']
-        start = self.cleaned_data['start']
+    def clean(self):
+        cleaned_data = super(EventForm, self).clean()
+        end = cleaned_data.get('end', None)
+        start = cleaned_data.get('start', None)
 
-        if data < start:
+        if end and start and end < start:
             raise forms.ValidationError(
                 _("Events can't end before they've started."))
-        return data
+        return cleaned_data
 
 
 class RSVPForm(forms.ModelForm):

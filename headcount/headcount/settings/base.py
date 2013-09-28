@@ -126,6 +126,7 @@ THIRD_PARTY_APPS = (
     'discover_runner',
     'crispy_forms',
     'floppyforms',
+    'djrill',
 )
 LOCAL_APPS = (
     'events',

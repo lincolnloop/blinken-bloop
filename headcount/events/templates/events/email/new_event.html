@@ -1,0 +1,23 @@
+<h2>Hi {{ instance.host.name }}!</h2>
+
+<p>You just created an event named <strong>{{ instance.title }}</strong>. That's awesome!</p>
+
+<p>Here are the details we have for it:</p>
+<dl>
+    <dt>Location:</dt>
+    <dd>{{ instance.location }}</dd>
+    <dt>Starts at:</dt>
+    <dd>{{ instance.start }}</dd>
+    <dt>Ends at:</dt>
+    <dd>{{ instance.end }}</dd>
+    <dt>Description:</dt>
+    <dd>{{ instance.description_html|safe }}</dd>
+</dl>
+
+<p>You want <strong>{{ instance.max_attendees|default_if_none:"any number of" }}</strong> people, max. And you're cool with each person bringing <strong>{{ instance.max_guests|default_if_none:"any number of" }}</strong> guests each. {% if instance.cost %}You've also said the cost is <strong>"{{ instance.cost }}"</strong> per person.{% endif %}</p>
+
+<p>If you need to edit your event, please use this URL: <a href="http://{{ domain }}{% url 'events:edit' instance.shortid %}">http://{{ domain }}{% url 'events:edit' instance.shortid %}</a>.</p>
+
+<p>Thanks for hosting your event with us!</p>
+
+<p>The Headcount.io Team</p>

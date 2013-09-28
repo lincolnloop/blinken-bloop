@@ -19,6 +19,8 @@ from model_utils import Choices
 from model_utils.managers import PassThroughManager
 from model_utils.models import TimeStampedModel, TimeFramedModel
 
+from . import signals
+
 
 def get_shortid(length=6, alphabet=string.letters + string.digits):
     return u''.join([random.choice(alphabet) for i in xrange(length)])
@@ -124,3 +126,5 @@ class RSVP(TimeStampedModel):
             raise ValidationError(
                 _('The event only allows {0.event.max_guests} '
                   'guest(s).'.format(self)))
+
+models.signals.post_save.connect(signals.event_creation, sender=Event)

@@ -1,0 +1,21 @@
+Hi {{ instance.host.name }}!
+
+You just created an event named {{ instance.title }}. That's awesome!
+
+Here are the details we have for it:
+
+    Location: {{ instance.location }}
+    Starts at: {{ instance.start }}
+    Ends at: {{ instance.end }}
+
+    You want {{ instance.max_attendees|default_if_none:"any number of" }} people, max.
+    And you're cool with each person bringing {{ instance.max_guests|default_if_none:"any number of" }} guests each. {% if instance.cost %}You've also said the cost is "{{ instance.cost }}" per person.{% endif %}
+
+    Description:
+    {{ instance.description }}
+
+If you need to edit your event, please use this URL: http://{{ domain }}{% url 'events:edit' instance.shortid %}
+
+Thanks for hosting your event with us!
+
+The Headcount.io Team
