@@ -1,12 +1,24 @@
 @standard-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
+@bg-color: #222;
+@teal: #4dd2ff;
+@light-teal: #aaeaff;
 
 body {
     font-family: @standard-font;
     font-weight: 400;
     font-size: 12pt;
-    background: #dcf3ff;
-    color: #222;
+    background: @bg-color;
+    color: white;
     line-height: 1.8em;
+}
+
+a {
+    color: @teal;
+
+    &:hover {
+        color: @light-teal;
+        text-decoration: underline;
+    }
 }
 
 h1, h2, h3, h4, h5 {
@@ -24,19 +36,20 @@ h2 {
 }
 
 .navbar {
-    background: #222;
+    background: @bg-color;
 
     .navbar-brand {
         padding: 4px;
+    }
+
+    li a:hover {
+        background: none;
+        text-decoration: underline;
     }
 }
 
 .logo {   
     height: 40px;
-}
-
-.content {
-    margin-top: 70px;
 }
 
 .footer {
