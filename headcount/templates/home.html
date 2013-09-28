@@ -14,7 +14,7 @@
         {{ wizard.management_form }}
         {% crispy wizard.form %}
 
-        <div class="form-actions row">
+        <div class="form-actions">
             {% if wizard.steps.prev %}
                 <div class="col-md-6 col-xs-12">
                     <button name="wizard_goto_step" type="submit" class="btn btn-large btn-block" value="{{ wizard.steps.prev }}">Back</button>

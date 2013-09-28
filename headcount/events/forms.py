@@ -13,10 +13,12 @@ TIME_FORMAT = '%H:%M %p'
 
 class EventForm(forms.ModelForm):
     start = forms.SplitDateTimeField(
+        label=_('When does the event start?'),
         input_time_formats=[TIME_FORMAT],
         widget=forms.SplitDateTimeWidget(time_format=TIME_FORMAT)
     )
     end = forms.SplitDateTimeField(
+        label=_('And when does it end?'),
         input_time_formats=[TIME_FORMAT],
         widget=forms.SplitDateTimeWidget(time_format=TIME_FORMAT)
     )

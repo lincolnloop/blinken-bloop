@@ -27,24 +27,26 @@ class RSVPQuerySet(models.query.QuerySet):
 
 
 class Event(TimeStampedModel, TimeFramedModel):
-    host = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='events')
-    title = models.CharField(_('Event name'), max_length=500)
+    host = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
+                             related_name='events')
+    title = models.CharField(_('What do you want to call this event?'),
+                             max_length=500)
     description = models.TextField(
-        _('Event description'),
+        _("What's the event about?"),
         help_text=_('You should include contact details in the description. '
                     'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
-    location = models.CharField(max_length=750)
+    location = models.CharField(_("Where's the event?"), max_length=750)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
     max_attendees = models.PositiveIntegerField(
-        _('Max # of attendees'), blank=True,
+        _('How many people total?'), blank=True,
         help_text=_('Leave blank for no limit'), null=True)
     max_guests = models.PositiveIntegerField(
-        _('Max # of guests per attendee'), blank=True,
+        _('How many guests can people bring?'), blank=True,
         help_text=_('Leave blank for no limit'), null=True)
-    cost = models.CharField(_('Event cost'), blank=True, default='',
-                            max_length=150)
+    cost = models.CharField(_('Do people need to bring anything or pay?'),
+                            blank=True, default='', max_length=150)
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
 
     class Meta:

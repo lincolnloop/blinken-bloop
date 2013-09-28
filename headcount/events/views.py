@@ -7,9 +7,9 @@ from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
-from authtools.forms import UserCreationForm
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
+from headcount.forms import HeadcountUserCreationForm
 from . import forms
 from . import models
 
@@ -67,13 +67,16 @@ class EventWizard(SessionWizardView):
         kwargs.update({
             'form_list': [
                 forms.EventForm,
-                UserCreationForm
+                HeadcountUserCreationForm
             ]
         })
         return super(EventWizard, cls).as_view(*args, **kwargs)
 
     def get_form_kwargs(self, step):
-        return {'render_form_tag': False}
+        return {
+            'render_form_tag': False,
+            'show_actions': False
+        }
 
     def done(self, form_list, **kwargs):
         event_form = form_list[0]
