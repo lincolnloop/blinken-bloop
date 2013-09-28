@@ -7,7 +7,7 @@
 
 {% block content %}
     <h1>Want to track RSVPs for an event you're running?</h1>
-    <h2>Get started here:</h2>
+    <h2>Get started:</h2>
 
     <form class="form-horizontal" action="" method="post">
         {% csrf_token %}
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
             {% endif %}
-            <input type="submit" value="Save" class="btn btn-primary btn-large btn-block">
+            <input type="submit" value="Create" class="btn btn-primary btn-large btn-block">
             {% if wizard.steps.prev %}</div>{% endif %}
         </div>
     </form>
