@@ -1,0 +1,1 @@
+{{ instance.event.title }} has changed!

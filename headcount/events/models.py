@@ -128,3 +128,4 @@ class RSVP(TimeStampedModel):
                   'guest(s).'.format(self)))
 
 models.signals.post_save.connect(signals.event_creation, sender=Event)
+models.signals.post_save.connect(signals.event_change, sender=Event)

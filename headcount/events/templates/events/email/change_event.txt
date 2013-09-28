@@ -1,0 +1,9 @@
+Hi {{ instance.user.name }}!
+
+You RSVPed {{ instance.response }} to {{ instance.event.title }} and the event has recently been changed by the host.
+
+To view the updated event and change your RSVP (if needed), please visit: http://{{ domain }}{{ instance.event.get_absolute_url }}
+
+Thanks!
+
+The Headcount.io Team
