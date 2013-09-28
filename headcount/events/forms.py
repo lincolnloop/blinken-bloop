@@ -34,9 +34,9 @@ class EventForm(forms.ModelForm):
     class Media:
         css = {
             'screen': (
-                'vendor/pickadate/css/default.css',
-                'vendor/pickadate/css/default.date.css',
-                'vendor/pickadate/css/default.time.css'
+                'vendor/pickadate/css/classic.css',
+                'vendor/pickadate/css/classic.date.css',
+                'vendor/pickadate/css/classic.time.css'
             )
         }
         js = (
