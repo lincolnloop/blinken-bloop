@@ -69,6 +69,11 @@ class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
     def get_queryset(self):
         return self.model.objects.by_host(host=self.request.user).upcoming()
 
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, _('OK, we deleted the event and notified any'
+                                    '"yes" or "maybe" RSVPs'))
+        return super(DeleteEvent, self).delete(request, *args, **kwargs)
+
 
 class EventWizard(SessionWizardView):
     template_name = 'home.html'
