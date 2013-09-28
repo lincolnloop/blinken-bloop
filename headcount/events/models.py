@@ -42,10 +42,10 @@ class EventQuerySet(models.query.QuerySet):
 
 
 class RSVPQuerySet(models.query.QuerySet):
-    def coming(self):
+    def yes(self):
         return self.filter(response=RSVP.RESPONSE_CHOICES.yes)
 
-    def not_coming(self):
+    def no(self):
         return self.filter(response=RSVP.RESPONSE_CHOICES.no)
 
     def maybe(self):

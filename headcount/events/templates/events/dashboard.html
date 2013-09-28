@@ -13,9 +13,9 @@
                     <p>{{ event.venue_name }}</p>
                     <p>{{ event.start }} &ndash; {{ event.end }}</p>
                     <h4>RSVPs</h4>
-                    <p><strong>Yes:</strong> {{ event.rsvps.coming|length }}</p>
+                    <p><strong>Yes:</strong> {{ event.rsvps.yes|length }}</p>
                     <p><strong>Maybe:</strong> {{ event.rsvps.maybe|length }}</p>
-                    <p><strong>No:</strong> {{ event.rsvps.not_coming|length }}</p>
+                    <p><strong>No:</strong> {{ event.rsvps.no|length }}</p>
                     <p><strong>Total:</strong> {{ event.rsvps.all|length }}/{{ event.max_attendees }}</p>
                 </div>
                 <div class="panel-footer">
