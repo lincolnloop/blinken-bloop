@@ -4,7 +4,7 @@
     <h2>Dashboard</h2>
 
     {% for event in object_list %}
-        <article class="col-md-6 col-xs-12">
+        <article class="col-md-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{ event.title }}</h3>
@@ -14,8 +14,8 @@
                     <p>{{ event.start }} &ndash; {{ event.end }}</p>
                     <h4>RSVPs</h4>
                     <p><strong>Yes:</strong> {{ event.rsvps.coming|length }}</p>
-                    <p><strong>No:</strong> {{ event.rsvps.not_coming|length }}</p>
                     <p><strong>Maybe:</strong> {{ event.rsvps.maybe|length }}</p>
+                    <p><strong>No:</strong> {{ event.rsvps.not_coming|length }}</p>
                     <p><strong>Total:</strong> {{ event.rsvps.all|length }}/{{ event.max_attendees }}</p>
                 </div>
                 <div class="panel-footer">

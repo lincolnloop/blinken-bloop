@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
@@ -127,14 +127,20 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
     model = models.RSVP
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        If a user who has already rsvp gets here, redirect them to the
+        update view.
+        """
         try:
-            self.model.objects.get(event__shortid=kwargs.get('slug'),
-                                   user=request.user)
+            rsvp = self.model.objects.select_related('event').get(
+                event__shortid=kwargs.get('slug'), user=request.user)
         except self.model.DoesNotExist:
             return super(EventDetailRSVP, self).dispatch(
                 request, *args, **kwargs)
 
-        raise Exception("TODO: SEND USER TO UPDATE VIEW")
+        return HttpResponseRedirect(
+            reverse_lazy('events:update_rsvp',
+                         kwargs={'slug': rsvp.event.shortid}))
 
     def get_context_data(self, **kwargs):
         """
@@ -160,3 +166,28 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
 
     def get_success_url(self):
         return self.get_event().get_absolute_url()
+
+
+class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
+                 generic.UpdateView):
+    form_class = forms.RSVPForm
+    form_valid_message = u'Your RSVP has been updated!'
+    model = models.RSVP
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'events:update_rsvp',
+            kwargs={'slug': self.get_object().event.shortid})
+
+    def get_context_data(self, **kwargs):
+        context = super(RSVPUpdate, self).get_context_data(**kwargs)
+        context.update({'event': self.get_object().event})
+        return context
+
+    def get_object(self, queryset=None):
+        try:
+            return self.model.objects.select_related('event').get(
+                event__shortid=self.kwargs.get('slug'),
+                user=self.request.user)
+        except self.model.DoesNotExist:
+            raise Http404

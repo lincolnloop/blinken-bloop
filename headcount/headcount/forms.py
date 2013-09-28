@@ -40,8 +40,8 @@ class HeadcountAuthenticationForm(AuthenticationForm):
     helper.form_method = 'POST'
     helper.layout = Layout(
         Div(
-            Div(u'username', css_class=u'col-xs-12 col-md-6'),
-            Div(u'password', css_class=u'col-xs-12 col-md-6'),
+            Div(u'username', css_class=u'col-xs-12 col-md-12'),
+            Div(u'password', css_class=u'col-xs-12 col-md-12'),
             css_class=u'row'
         ),
         FormActions(

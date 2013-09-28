@@ -26,7 +26,8 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
         widgets = {
-            'max_attendees': forms.NumberInput(attrs={'min': '0', 'max': '9999'}),
+            'max_attendees': forms.NumberInput(
+                attrs={'min': '0', 'max': '9999'}),
             'max_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
             'host': forms.HiddenInput
         }
@@ -59,12 +60,12 @@ class EventForm(forms.ModelForm):
                     HTML('<a href="{0}" class="btn btn-lg btn-block btn-link">'
                          'Nevermind</a>'.format(
                              reverse_lazy('events:dashboard'))),
-                    css_class='col-xs-12 col-md-4'
+                    css_class='col-xs-12 col-md-6'
                 ),
                 Div(
                     Submit('save', _('Create'),
                            css_class='primary btn-lg btn-block'),
-                    css_class='col-xs-12 col-md-4'
+                    css_class='col-xs-12 col-md-6'
                 )
             )
 
@@ -81,14 +82,19 @@ class EventForm(forms.ModelForm):
                 u'location',
                 u'description',
                 Div(
-                    Div(u'start', css_class=u'col-xs-12 col-md-4 no-horizontal'),
-                    Div(u'end', css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'start',
+                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'end',
+                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     css_class=u'row'
                 ),
                 Div(
-                    Div(u'max_attendees', css_class=u'col-xs-12 col-md-4 no-horizontal'),
-                    Div(u'max_guests', css_class=u'col-xs-12 col-md-4 no-horizontal'),
-                    Div(u'cost', css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'max_attendees',
+                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'max_guests',
+                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                    Div(u'cost',
+                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     css_class=u'row'
                 ),
             ),
@@ -140,7 +146,13 @@ class RSVPForm(forms.ModelForm):
             actions
         )
 
-        self.fields['event'].initial = event.pk
-        self.fields['event'].widget = forms.HiddenInput()
-        self.fields['user'].initial = user.pk
-        self.fields['user'].widget = forms.HiddenInput()
+        if all([event, user]):
+            self.fields['event'].initial = event.pk
+            self.fields['event'].widget = forms.HiddenInput()
+            self.fields['user'].initial = user.pk
+            self.fields['user'].widget = forms.HiddenInput()
+        else:
+            self.fields['event'].initial = self.instance.event_id
+            self.fields['event'].widget = forms.HiddenInput()
+            self.fields['user'].initial = self.instance.user_id
+            self.fields['user'].widget = forms.HiddenInput()
