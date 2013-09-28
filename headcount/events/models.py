@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import misaka
+
 from model_utils.models import TimeStampedModel, TimeFramedModel
 
 
@@ -22,5 +24,12 @@ class Event(TimeStampedModel, TimeFramedModel):
     cost = models.CharField(_("Event cost"), blank=True, default='',
                             max_length=150)
 
+    class Meta:
+        ordering = ['start', 'end', 'title']
+
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.description_html = misaka.html(self.description)
+        super(Event, self).save(*args, **kwargs)
