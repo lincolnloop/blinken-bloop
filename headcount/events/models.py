@@ -103,6 +103,12 @@ class Event(TimeStampedModel, TimeFramedModel):
     def get_absolute_url(self):
         return reverse_lazy('events:detail', kwargs={'slug': self.shortid})
 
+    @property
+    def total_coming(self):
+        """ Return total number of poeple coming """
+        return sum(
+            [peep.num_guests + 1 for peep in self.rsvps.possible()])
+
 
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
