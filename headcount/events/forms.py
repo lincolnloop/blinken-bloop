@@ -73,6 +73,7 @@ class EventForm(forms.ModelForm):
                 u'',
                 u'host',
                 u'title',
+                u'location',
                 u'description',
                 Div(
                     Div(u'start', css_class=u'col-xs-12 col-md-6'),
@@ -85,21 +86,6 @@ class EventForm(forms.ModelForm):
                     css_class=u'row'
                 ),
                 u'cost'
-            ),
-            Fieldset(
-                _('Location'),
-                u'venue_name',
-                Div(
-                    Div(u'address', css_class=u'col-xs-12 col-md-6'),
-                    Div(u'address2', css_class=u'col-xs-12 col-md-6'),
-                    css_class=u'row'
-                ),
-                Div(
-                    Div(u'city', css_class=u'col-xs-12 col-md-4'),
-                    Div(u'state', css_class=u'col-xs-12 col-md-4'),
-                    Div(u'country', css_class=u'col-xs-12 col-md-4'),
-                    css_class=u'row'
-                ),
             ),
             actions
         )
