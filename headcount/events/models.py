@@ -1,9 +1,11 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import misaka
 
+from model_utils import Choices
 from model_utils.models import TimeStampedModel, TimeFramedModel
 
 
@@ -33,3 +35,29 @@ class Event(TimeStampedModel, TimeFramedModel):
     def save(self, *args, **kwargs):
         self.description_html = misaka.html(self.description)
         super(Event, self).save(*args, **kwargs)
+
+
+class RSVP(TimeStampedModel):
+    RESPONSE_CHOICES = Choices(
+        ('yes', 'Yes'),
+        ('no', 'No'),
+        ('maybe', 'Maybe')
+    )
+    event = models.ForeignKey(Event, related_name="rsvps")
+    num_guests = models.PositiveIntegerField(
+        _("How many guests are you bringing?"), default=0)
+    response = models.CharField(
+        _("Are you coming?"), choices=RESPONSE_CHOICES, max_length=10)
+    name = models.CharField(_("Your name"), max_length=255)
+    email = models.EmailField(_("Your email"))
+    notes = models.TextField(_("Any notes for the organizer"), blank=True)
+
+    class Meta:
+        verbose_name = _("RSVP")
+        verbose_name_plural = _("RSVPs")
+
+    def clean(self):
+        if self.num_guests > self.event.max_guests:
+            raise ValidationError(
+                _("The event only allows {0.event.max_guests} "
+                  "guest(s).".format(self)))
