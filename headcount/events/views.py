@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils.decorators import classonlymethod
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, ListView
 
 from authtools.forms import UserCreationForm
@@ -52,5 +54,8 @@ class EventWizard(SessionWizardView):
                             password=user_form.cleaned_data.get('password1'))
         if user is not None:
             login(self.request, user)
+
+        messages.success(
+            self.request, _('Your event and account have been created!'))
 
         return HttpResponseRedirect(reverse_lazy('events:dashboard'))
