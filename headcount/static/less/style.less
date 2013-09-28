@@ -2,6 +2,7 @@
 @bg-color: #222;
 @teal: #4dd2ff;
 @fuchsia: #ff33a0;
+@pink: #ffaaaf;
 
 body {
     font-family: @standard-font;
@@ -51,6 +52,13 @@ h2 {
     height: 40px;
 }
 
+.text-danger {
+    color: @pink;
+    &:hover {
+        color: red;
+    };
+}
+
 .btn-primary {
     background-image: none;
     background-color: @teal;
@@ -61,6 +69,16 @@ h2 {
         background-color: @fuchsia;
         border: 1pt solid darken(@fuchsia, 20%);
         color: black;
+    }
+}
+
+.panel {
+    background: none;
+    border: 1pt solid black;
+    .panel-heading, .panel-footer {
+        background: black;
+        color: white;
+        border: none;
     }
 }
 
