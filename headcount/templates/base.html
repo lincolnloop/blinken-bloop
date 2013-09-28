@@ -6,6 +6,7 @@
     <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 
     <link rel="stylesheet/less" type="text/css" title="Default style" href="/static/less/style.less">
+    <script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
     <script src="/static/js/less.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     {% block scripts %}{% endblock %}
@@ -32,5 +33,6 @@
             {% block content %}{% endblock content %}
         </div>
     </div>
+    {% block end_body_js %}{% endblock %}
 </body>
 </html>
