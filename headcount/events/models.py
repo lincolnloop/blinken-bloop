@@ -60,8 +60,8 @@ class Event(TimeStampedModel, TimeFramedModel):
                     'Markdown is supported.'))
     description_html = models.TextField(blank=True, editable=False)
     location = models.CharField(
-        _("Where's the event?"), 
-        help_text=_("Address, IRC channel, or just 'My house'"), 
+        _("Where's the event?"),
+        help_text=_("Address, IRC channel, or just 'My house'"),
         max_length=750)
     latitude = models.FloatField(blank=True, editable=False, null=True)
     longitude = models.FloatField(blank=True, editable=False, null=True)
