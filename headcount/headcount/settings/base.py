@@ -124,6 +124,7 @@ THIRD_PARTY_APPS = (
     'authtools',
 )
 LOCAL_APPS = (
+    'events',
 )
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
