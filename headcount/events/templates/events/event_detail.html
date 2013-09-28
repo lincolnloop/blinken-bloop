@@ -2,5 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {{ object }}
+<div>
+    <h2>{{ event.title }}</h2>
+    {{ event.description_html|safe }}
+    <p>Max Attendees: {{ event.max_attendees }}</p>
+    <p>Max Guests: {{ event.max_guests }}</p>
+    {% if event.cost %}
+    <p>Cost: {{ event.cost }}</p>
+    {% endif %}
+</div>
 {% endblock %}
