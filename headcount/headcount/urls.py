@@ -6,5 +6,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    url(r'^accounts/', include('authtools.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

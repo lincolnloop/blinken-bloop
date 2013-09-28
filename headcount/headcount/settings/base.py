@@ -132,12 +132,15 @@ DJANGO_APPS = (
 )
 THIRD_PARTY_APPS = (
     'south',
+    'authtools',
 )
 LOCAL_APPS = (
 )
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+AUTH_USER_MODEL = 'authtools.User'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
