@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 
 from authtools.forms import UserCreationForm
@@ -15,7 +16,7 @@ class HeadcountUserCreationForm(UserCreationForm):
         actions = HTML('')
         if show_actions:
             actions = FormActions(
-                Submit('save', _('Create'),
+                Submit('save', _('Sign up!'),
                        css_class='primary btn-lg btn-block'),
             )
 
@@ -32,3 +33,19 @@ class HeadcountUserCreationForm(UserCreationForm):
             ),
             actions
         )
+
+
+class HeadcountAuthenticationForm(AuthenticationForm):
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Div(
+            Div(u'username', css_class=u'col-xs-12 col-md-6'),
+            Div(u'password', css_class=u'col-xs-12 col-md-6'),
+            css_class=u'row'
+        ),
+        FormActions(
+            Submit('save', _('Log in!'),
+                   css_class='primary btn-lg btn-block')
+        )
+    )
