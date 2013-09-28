@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
@@ -168,7 +168,20 @@ class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
     form_valid_message = u'Your RSVP has been updated!'
     model = models.RSVP
 
+    def get_success_url(self):
+        return reverse_lazy(
+            'events:update_rsvp',
+            kwargs={'slug': self.get_object().event.shortid})
+
+    def get_context_data(self, **kwargs):
+        context = super(RSVPUpdate, self).get_context_data(**kwargs)
+        context.update({'event': self.get_object().event})
+        return context
+
     def get_object(self, queryset=None):
-        return get_object_or_404(self.model,
-                                event__shortid=self.kwargs.get('slug'),
-                                user=self.request.user)
+        try:
+            return self.model.objects.select_related('event').get(
+                event__shortid=self.kwargs.get('slug'),
+                user=self.request.user)
+        except self.model.DoesNotExist:
+            raise Http404
