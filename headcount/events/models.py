@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import arrow
 import misaka
 
 from model_utils import Choices
@@ -13,6 +14,16 @@ from model_utils.models import TimeStampedModel, TimeFramedModel
 class EventQuerySet(models.query.QuerySet):
     def by_host(self, host):
         return self.filter(host=host)
+
+    def upcoming(self):
+        return self.filter(start__gt=arrow.utcnow().datetime)
+
+    def past(self):
+        return self.filter(end__lt=arrow.utcnow().datetime)
+
+    def current(self):
+        now = arrow.utcnow().datetime
+        return self.filter(start__lte=now, end__gte=now)
 
 
 class RSVPQuerySet(models.query.QuerySet):

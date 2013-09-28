@@ -20,6 +20,7 @@
                 </div>
                 <div class="panel-footer">
                     <a href="{% url 'events:edit' event.pk %}">Edit</a>
+                    <a href="{% url 'events:delete' event.pk %}" class="text-danger pull-right">Delete</a>
                 </div>
             </div>
         </article>

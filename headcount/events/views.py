@@ -28,7 +28,6 @@ class CreateEvent(LoginRequiredMixin, FormValidMessageMixin,
     form_valid_message = u'Your event was created!'
     model = models.Event
     success_url = reverse_lazy('events:dashboard')
-    template_name = 'events/form.html'
 
     def get_form_kwargs(self, **kwargs):
         kwargs = super(CreateEvent, self).get_form_kwargs(**kwargs)
@@ -49,7 +48,9 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
     form_valid_message = u'Your event was updated!'
     model = models.Event
     success_url = reverse_lazy('events:dashboard')
-    template_name = 'events/form.html'
+
+    def get_queryset(self):
+        return self.model.objects.by_host(host=self.request.user).upcoming()
 
     def get_form_kwargs(self, **kwargs):
         kwargs = super(UpdateEvent, self).get_form_kwargs(**kwargs)
@@ -57,6 +58,14 @@ class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
             'show_actions': True,
         })
         return kwargs
+
+
+class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
+    model = models.Event
+    success_url = reverse_lazy('events:dashboard')
+
+    def get_queryset(self):
+        return self.model.objects.by_host(host=self.request.user).upcoming()
 
 
 class EventWizard(SessionWizardView):
