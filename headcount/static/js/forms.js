@@ -13,9 +13,9 @@ $(document).ready(function(){
 
     $('#div_id_response').on('change', 'input[name=response]', function (){
         if ($(this).attr('value') == 'no') {
-            $('#div_id_num_guests').hide();
+            $('#div_id_num_guests').hide(300);
         } else {
-            $('#div_id_num_guests').show();
+            $('#div_id_num_guests').show(300);
         }
     });
 });
