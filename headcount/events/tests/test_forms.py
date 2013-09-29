@@ -27,9 +27,9 @@ class EventFormTests(TestCase):
         self.host = create_user()
         self.form_data = {
             'start_0': '10/05/2016',
-            'start_1': '7:00 AM',
+            'start_1': '7:00',
             'end_0': '10/05/2016',
-            'end_1': '12:00 PM',
+            'end_1': '12:00',
             'title': 'Test Event',
             'description': '## Test Event',
             'location': 'My House',
