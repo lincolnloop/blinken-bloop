@@ -23,9 +23,17 @@ class BaseTestCase(TestCase):
         self.assertTrue(
             self.client.login(email=email, password=password))
 
-    def test_home_page(self):
+    def test_home_page_anon(self):
         url = reverse('events:home')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
+
+    def test_home_page_auth(self):
+        self._login_user()
+        url = reverse('events:home')
+        response = self.client.get(url, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'events/event_form.html')
