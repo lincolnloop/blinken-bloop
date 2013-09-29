@@ -49,20 +49,37 @@ class EventFormTests(TestCase):
 
 class RSVPFormTests(TestCase):
     def setUp(self):
-        self.host = create_user()
-        self.event = create_event(self.host)
+        self.user = create_user()
+        self.event = create_event(self.user)
         self.form_data = {
             'event': self.event.pk,
-            'user': self.host.pk,
+            'user': self.user.pk,
             'response': u'yes',
             'num_guests': 1
         }
 
     def test_valid(self):
         form = forms.RSVPForm(data=self.form_data, event=self.event,
-                              user=self.host)
+                              user=self.user)
         self.assertTrue(form.is_valid())
         self.assertEqual(form.instance.party_size, 2)
         form.save()
         self.assertEqual(form.instance.event.total_coming, 2)
-        import pdb; pdb.set_trace()
+
+    def test_event_full(self):
+        self.event.max_attendees = 3
+        self.event.save()
+        self.mean_user = create_user(email=u'mean@example.com')
+        rsvp = models.RSVP.objects.create(
+            event=self.event,
+            user=self.mean_user,
+            response=u'yes',
+            num_guests=1
+        )
+        self.assertIsInstance(rsvp, models.RSVP)
+
+        form = forms.RSVPForm(data=self.form_data, event=self.event,
+                              user=self.user)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['__all__'][0],
+                         "We're sorry, there are only 1 space(s) left.")
