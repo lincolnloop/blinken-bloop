@@ -144,6 +144,20 @@ class EventWizard(SessionWizardView):
         new_user = user_form.save()
         event = event_form.save(commit=False)
         event.host = new_user
+
+        if event_form.cleaned_data.get('show_on_map'):
+            url = ('http://open.mapquestapi.com/geocoding/v1/address?key={0}'
+                   '&location={1}'.format(
+                       getattr(settings, 'OSM_API_KEY'),
+                       event_form.cleaned_data.get('location')
+                   ))
+            req = requests.get(url).json()['results'][0][
+                'locations'][0]['latLng']
+            event.latitude = req['lat']
+            event.longitude = req['lng']
+        else:
+            event.latitude = event.longitude = ''
+
         event.save()
 
         user = authenticate(username=new_user.email,
