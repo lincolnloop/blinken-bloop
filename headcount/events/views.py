@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
@@ -18,6 +19,14 @@ from . import models
 class Dashboard(LoginRequiredMixin, generic.ListView):
     model = models.Event
     template_name = 'events/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
+        context.update({
+            'domain': Site.objects.get_current().domain
+        })
+
+        return context
 
     def get_queryset(self):
         return self.model.objects.by_host(host=self.request.user).upcoming()
@@ -148,7 +157,10 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         If requesting user is the host, don't display an rsvp form.
         """
         context = super(EventDetailRSVP, self).get_context_data(**kwargs)
-        context.update({'event': self.get_event()})
+        context.update({
+            'event': self.get_event(),
+            'domain': Site.objects.get_current().domain
+        })
 
         if self.request.user == context['event'].host:
             del context['form']
@@ -174,6 +186,18 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
 
     def get_queryset(self):
         return self.model.objects.by_host(host=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add event to context.
+        If requesting user is the host, don't display an rsvp form.
+        """
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        context.update({
+            'domain': Site.objects.get_current().domain
+        })
+
+        return context
 
 
 class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
