@@ -3,3 +3,4 @@ env/*
 *~
 headcount/headcount/settings/local.py
 *.db
+*.log
