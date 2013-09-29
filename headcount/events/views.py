@@ -202,7 +202,7 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         context.update({
             'event': self.get_event(),
             'domain': Site.objects.get_current().domain,
-            'osm_api_key': getattr(settings, 'OSM_API_KEY'),
+            'osm_api_key': getattr(settings, 'OSM_API_KEY')
         })
 
         if self.request.user == context['event'].host:

@@ -45,6 +45,7 @@
                             <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
                         </div>
                         <div class="col-md-6 event-info">
+                            {% if event.is_full %}<img src="{{ STATIC_URL }}img/full-badge.png" class="full pull-right"><!-- Icon "Celebration" designed by Scott Lewis from The Noun Project: http://thenounproject.com/noun/celebration/#icon-No6215 -->{% endif %}
                             <p>{{ event.location }}</p>
                             <p>{{ event.start }} &ndash; {{ event.end }}</p>
                         </div>
