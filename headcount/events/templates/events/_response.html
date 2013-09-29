@@ -1,4 +1,4 @@
-<div>
+<div class="the-rsvp">
     <span class="response yes">Y</span>
     {% if rsvp.user.name %}
         <span title="{{ rsvp.user.email }}">{{ rsvp.user.name }}</span>
@@ -10,6 +10,6 @@
     {% endif %}
     {% if rsvp.notes %}
         &nbsp;
-        <span class="notes glyphicon glyphicon-envelope" title='"{{ rsvp.notes }}"'></span>
+        <a href="{% url 'events:detail' event.shortid %}#rsvp-{{ rsvp.pk }}"><span class="notes glyphicon glyphicon-envelope" title='"{{ rsvp.notes }}"'></span></a>
     {% endif %}
 </div>

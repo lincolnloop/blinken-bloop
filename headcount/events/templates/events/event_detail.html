@@ -3,7 +3,6 @@
 {% block edit_delete %}
 <span class="edit-delete pull-right">
     <a href="{% url 'events:edit' event.shortid %}">Edit</a>
-    <a href="{% url 'events:email_rsvps' event.shortid %}">Email RSVPs</a>
     <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
 </span>
 {% endblock %}
@@ -13,7 +12,7 @@
 {% block side_column %}
     {% if event.rsvps.all.count %}
         <h2>Guest list
-            <span class="edit-delete pull-right"><a href="{% url 'events:detail_printable' event.shortid %}" class="help"><span class="glyphicon glyphicon-print"></span> Printable version</a></span>
+            <span class="edit-delete pull-right"><a href="{% url 'events:email_rsvps' event.shortid %}" class="help">Email RSVPs</a> <a href="{% url 'events:detail_printable' event.shortid %}" class="help"><span class="glyphicon glyphicon-print"></span> Printable version</a></span>
         </h2>
         <form method="POST">
             {% csrf_token %}
