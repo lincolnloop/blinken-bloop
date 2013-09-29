@@ -144,6 +144,18 @@ h4 {
         h4 {
             margin-top: 0;
             margin-bottom: 15px;
+            span {
+                font-weight: 300;
+                &.yes {
+                    color: @teal;
+                }
+                &.maybe {
+                    color: @yellow;
+                }
+                &.no {
+                    color: @fuchsia;
+                }
+            }
         }
         .event-info {
             text-align: right;
@@ -169,16 +181,16 @@ h4 {
                 text-align: center;
                 color: lighten(@bg-color, 3%);
                 font-weight: 700;
-            }
 
-            .yes {
-                background: @teal;
-            }
-            .maybe {
-                background: @yellow;
-            }
-            .no {
-                background: @fuchsia;
+                &.yes {
+                    background: @teal;
+                }
+                &.maybe {
+                    background: @yellow;
+                }
+                &.no {
+                    background: @fuchsia;
+                }
             }
 
             .guests {

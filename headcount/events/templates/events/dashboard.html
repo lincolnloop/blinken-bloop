@@ -23,9 +23,13 @@
                                 {{ event.total_coming }}
                             {% endif %} RSVPs
                             {% if event.rsvps.all|length %}:
-                                {{ event.rsvps.yes|length }} yes{{ event.rsvps.yes|length|pluralize:"es" }}
-                                {% if event.rsvps.maybe|length %}, {{ event.rsvps.maybe|length }} maybe{{ event.rsvps.maybe|length|pluralize }}{% endif %}
-                                {% if event.rsvps.no|length %}, {{ event.rsvps.no|length }} no{{ event.rsvps.no|length|pluralize }}{% endif %}
+                                {{ event.yes_coming }} <span class="yes">yes{{ event.yes_coming|pluralize:"es" }}</span>
+                                {% if event.rsvps.maybe|length %}
+                                    , {{ event.maybe_coming }} <span class="maybe">maybe{{ event.maybe_coming|pluralize }}</span>
+                                {% endif %}
+                                {% if event.rsvps.no|length %}
+                                    , {{ event.rsvps.no|length }} <span class="no">no{{ event.rsvps.no|length|pluralize }}</span>
+                                {% endif %}
                             {% endif %}
                         </h4>
                         <div class="rsvps">

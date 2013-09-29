@@ -106,9 +106,21 @@ class Event(TimeStampedModel, TimeFramedModel):
 
     @property
     def total_coming(self):
-        """ Return total number of poeple coming """
+        """ Return total number of people coming """
         return sum(
             [peep.num_guests + 1 for peep in self.rsvps.possible()])
+
+    @property
+    def yes_coming(self):
+        """ Return total number of people for sure coming """
+        return sum(
+            [peep.num_guests + 1 for peep in self.rsvps.yes()])
+
+    @property
+    def maybe_coming(self):
+        """ Return total number of people who may be coming """
+        return sum(
+            [peep.num_guests + 1 for peep in self.rsvps.maybe()])
 
 
 class RSVP(TimeStampedModel):
