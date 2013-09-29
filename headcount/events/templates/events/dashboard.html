@@ -3,8 +3,8 @@
 {% block content %}
     <h2>Dashboard</h2>
 
+    <h3>Your Events</h3>
     {% if events %}
-        <h3>Your Events</h3>
         {% for event in events %}
             <article class="col-md-12 col-xs-12">
                 <div class="panel panel-default">
@@ -54,9 +54,9 @@
                     </div>
                 </div>
             </article>
-        {% empty %}
-            <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
         {% endfor %}
+    {% else %}
+    <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
     {% endif %}
 
     {% if rsvps %}
