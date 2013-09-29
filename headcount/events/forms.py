@@ -120,12 +120,6 @@ class EventForm(forms.ModelForm):
 
         return cleaned_data
 
-    def save(self, commit=True):
-        instance = super(EventForm, self).save(commit)
-        if self.cleaned_data.get('show_on_map'):
-
-
-
 
 class RSVPForm(forms.ModelForm):
     class Meta:
