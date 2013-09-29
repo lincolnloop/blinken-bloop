@@ -1,7 +1,11 @@
-<tr>
+<tr id="rsvp-{{ rsvp.pk }}">
     <td>{{ rsvp.response|capfirst }}</td>
     <td><input type="checkbox" name="delete_{{ rsvp.id }}"></td>
-    <td>{{ rsvp.user }}</td>
+    <td>{{ rsvp.user.name }}<br>{{ rsvp.user.email }}</td>
     <td>{% if rsvp.response = "no" %}N/A{% else %}{{ rsvp.num_guests}}{% endif %}</td>
-    <td>{{ rsvp.notes }}</td>
+    <td><a href="#" class="notes-truncated"><span class="glyphicon glyphicon-envelope"></span></a></td>
+</tr>
+<tr id="notes-{{ rsvp.pk }}" class="notes-all">
+    <td></td>
+    <td colspan="4" class="help">{{ rsvp.notes }}</td>
 </tr>
