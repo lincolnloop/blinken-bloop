@@ -38,12 +38,18 @@ h2 {
 }
 
 h3 {
-    font-size: 2.5em;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h4 {
+    font-size: 2rem;
     font-weight: 700;
 }
 
 .navbar {
-    background: @bg-color;
+    background: none;
+    box-shadow: none;
 
     .navbar-brand {
         padding: 4px;
@@ -90,6 +96,54 @@ h3 {
     .panel-heading {
         h3 {
             font-size: 2.4rem;
+        }
+    }
+
+    .panel-body {
+        h4 {
+            margin-top: 0;
+        }
+        .event-info {
+            text-align: right;
+        }
+
+        .rsvp-info {
+            .rsvps {
+                display: block;
+                width: 100%;
+                -moz-column-count: 2;
+                -webkit-column-count: 2;
+                column-count: 2;
+                div {
+                    margin-bottom: 5px;
+                    padding: 0 0 0 5px;
+                }
+            }
+
+            .response {
+                display: inline-block;
+                width: 1.6em;
+                height: 1.6em;
+                text-align: center;
+                border-radius: 5px;
+                color: lighten(@bg-color, 3%);
+                font-weight: 700;
+            }
+
+            .yes {
+                background: @teal;
+            }
+            .maybe {
+                background: #e0ff66;
+            }
+            .no {
+                background: red;
+            }
+
+            .guests {
+                font-weight: 700;
+                font-style: italic;
+            }
         }
     }
 
