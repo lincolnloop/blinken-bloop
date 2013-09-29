@@ -3,6 +3,11 @@
 
 {% block scripts %}
     {{ form.media }}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -28,7 +33,10 @@
         <h3>Where</h3>
         <p>{{ event.location }}</p>
         {% if event.latitude and event.longitude %}
+        <div id="map" style="width: 400px; height: 200px;" data-lat="{{ event.latitude }}" data-long="{{ event.longitude }}"></div>
+            {% comment %}
             <img src="http://open.mapquestapi.com/staticmap/v4/getmap?key={{ osm_api_key }}&size=400,200&zoom=10&center={{ event.latitude }},{{ event.longitude }}&scalebar=false&mcenter={{ event.latitude }},{{ event.longitude }}">
+            {% endcomment %}
         {% endif %}
 
         <h3>More info</h3>
@@ -66,4 +74,19 @@
         {% endif %}
         {% endblock %}
     </div>
+{% endblock %}
+
+{% block end_body_js %}
+<script>
+    var latitude = $('#map').attr('data-lat'),
+        longitude = $('#map').attr('data-long');
+
+    if (latitude && longitude) {
+        var map = L.map('map').setView([{{ event.latitude }}, {{ event.longitude }}], 13);
+        L.tileLayer('http://{s}.tile.cloudmade.com/f1cc58b48ac048d19a352c2522f3f694/997/256/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+            maxZoom: 18
+        }).addTo(map);
+    }
+</script>
 {% endblock %}
