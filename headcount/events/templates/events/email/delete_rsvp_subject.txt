@@ -1,0 +1,1 @@
+Your RSVP for {{ instance.event.title }} has been deleted

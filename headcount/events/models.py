@@ -126,16 +126,17 @@ class Event(TimeStampedModel, TimeFramedModel):
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
         ('yes', 'Yes'),
+        ('maybe', 'Maybe'),
         ('no', 'No'),
-        ('maybe', 'Maybe')
     )
     event = models.ForeignKey(Event, related_name='rsvps')
     num_guests = models.PositiveIntegerField(
-        _('How many guests are you bringing?'), default=0)
+        _('Bringing any guests?'), default=0)
     response = models.CharField(
-        _('Are you coming?'), choices=RESPONSE_CHOICES, max_length=10)
+        _('Are you coming?'), choices=RESPONSE_CHOICES,
+        default=RESPONSE_CHOICES.yes, max_length=10)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='rsvps')
-    notes = models.TextField(_('Any notes for the organizer'), blank=True)
+    notes = models.TextField(_('Note for the organizer'), blank=True)
     objects = PassThroughManager.for_queryset_class(RSVPQuerySet)()
 
     class Meta:
@@ -158,3 +159,5 @@ models.signals.post_save.connect(signals.event_creation, sender=Event)
 models.signals.post_save.connect(signals.event_change, sender=Event)
 models.signals.pre_delete.connect(signals.event_delete, sender=Event)
 models.signals.post_save.connect(signals.rsvp_creation, sender=RSVP)
+models.signals.post_save.connect(signals.rsvp_notification, sender=RSVP)
+models.signals.pre_delete.connect(signals.rsvp_delete, sender=RSVP)

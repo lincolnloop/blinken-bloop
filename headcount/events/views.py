@@ -181,6 +181,7 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
 
 
 class EventDetail(LoginRequiredMixin, generic.DetailView):
+    http_methods_allowed = ['get', 'post']
     model = models.Event
     slug_field = 'shortid'
 
@@ -198,6 +199,23 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
         })
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        keys = [key.split('_')[-1] for key in request.POST.keys() if
+                key.startswith('delete_')]
+        rsvps = self.get_object().rsvps.filter(id__in=keys)
+
+        if rsvps:
+            messages.success(
+                request, _('{0} RSVP(s) cancelled'.format(len(rsvps)))
+            )
+
+        rsvps.delete()
+
+        return HttpResponseRedirect(
+            reverse_lazy('events:detail', kwargs={
+                'slug': self.get_object().shortid})
+        )
 
 
 class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,

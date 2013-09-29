@@ -1,0 +1,7 @@
+Hi {{ instance.event.host.name }}!
+
+{{ instance.user.name }} just RSVPed '{{ instance.response }}' to your {{ instance.event.title }} event.
+
+Better buy more chips!
+
+The Headcount.io Team

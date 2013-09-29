@@ -29,7 +29,7 @@ class EventForm(forms.ModelForm):
             'max_attendees': forms.NumberInput(
                 attrs={'min': '0', 'max': '9999'}),
             'max_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
-            'host': forms.HiddenInput
+            'host': forms.HiddenInput,
         }
 
     class Media:
@@ -116,6 +116,15 @@ class EventForm(forms.ModelForm):
 class RSVPForm(forms.ModelForm):
     class Meta:
         model = models.RSVP
+        widgets = {
+            'num_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
+            'response': forms.RadioSelect,
+        }
+
+    class Media:
+        js = (
+            'js/forms.js',
+        )
 
     def __init__(self, *args, **kwargs):
         event = kwargs.pop('event', None)
@@ -125,7 +134,7 @@ class RSVPForm(forms.ModelForm):
         actions = FormActions(
             Div(
                 Submit('save', _('RSVP'),
-                       css_class='primary btn-lg btn-block'),
+                    css_class='primary btn-lg btn-block'),
                 css_class='col-xs-12 col-md-6'
             )
         )

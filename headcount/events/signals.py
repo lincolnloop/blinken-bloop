@@ -46,7 +46,7 @@ def event_delete(sender, instance, **kwargs):
         },
         to=to_emails
     )
-    email.send(fail_silently=False)
+    email.send(fail_silently=True)
 
 
 def rsvp_creation(sender, instance, created, raw, **kwargs):
@@ -58,6 +58,34 @@ def rsvp_creation(sender, instance, created, raw, **kwargs):
             {
                 'instance': instance,
                 'domain': Site.objects.get_current().domain
+            },
+            to=(to_email,)
+        )
+        email.send(fail_silently=True)
+
+
+def rsvp_delete(sender, instance, **kwargs):
+    to_email = '{0.name} <{0.email}>'.format(instance.user)
+
+    email = generate_email(
+        'events/email/delete_rsvp',
+        HttpRequest(),
+        {
+            'instance': instance
+        },
+        to=(to_email,)
+    )
+    email.send(fail_silently=True)
+
+
+def rsvp_notification(sender, instance, created, raw, **kwargs):
+    if instance.response == instance.RESPONSE_CHOICES.yes:
+        to_email = '{0.name} <{0.email}>'.format(instance.event.host)
+        email = generate_email(
+            'events/email/notify_rsvp',
+            HttpRequest(),
+            {
+                'instance': instance,
             },
             to=(to_email,)
         )
