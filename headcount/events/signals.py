@@ -62,3 +62,17 @@ def rsvp_creation(sender, instance, created, raw, **kwargs):
             to=(to_email,)
         )
         email.send(fail_silently=True)
+
+
+def rsvp_delete(sender, instance, **kwargs):
+    to_email = '{0.name} <{0.email}>'.format(instance.user)
+
+    email = generate_email(
+        'events/email/delete_rsvp',
+        HttpRequest(),
+        {
+            'instance': instance
+        },
+        to=(to_email,)
+    )
+    email.send(fail_silently=False)

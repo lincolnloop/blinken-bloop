@@ -1,0 +1,7 @@
+Hi {{ instance.user.name }}!
+
+You RSVPed {{ instance.response }} for {{ instance.event.title }} but the host has cancelled your RSVP.
+
+Thanks!
+
+The Headcount.io Team

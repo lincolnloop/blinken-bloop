@@ -114,8 +114,8 @@ class Event(TimeStampedModel, TimeFramedModel):
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
         ('yes', 'Yes'),
+        ('maybe', 'Maybe'),
         ('no', 'No'),
-        ('maybe', 'Maybe')
     )
     event = models.ForeignKey(Event, related_name='rsvps')
     num_guests = models.PositiveIntegerField(
@@ -141,3 +141,4 @@ models.signals.post_save.connect(signals.event_creation, sender=Event)
 models.signals.post_save.connect(signals.event_change, sender=Event)
 models.signals.pre_delete.connect(signals.event_delete, sender=Event)
 models.signals.post_save.connect(signals.rsvp_creation, sender=RSVP)
+models.signals.pre_delete.connect(signals.rsvp_delete, sender=RSVP)

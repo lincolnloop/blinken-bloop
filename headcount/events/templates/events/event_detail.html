@@ -9,14 +9,39 @@
     <hr>
 
     {% regroup event.rsvps.all by response as rsvp_set %}
-    {% for rsvp in rsvp_set %}
-        <h3>{{ rsvp.grouper|capfirst }}</h3>
-        <ul>
-            {% for person in rsvp.list %}
-                <li>{{ person.user.name }}: {{ person.response }}</li>
-            {% endfor %}
-        </ul>
-    {% empty %}
+    {% if rsvp_set %}
+        <form method="POST">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Guests</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rsvp in rsvp_set %}
+                        <tr>
+                            <th colspan="*">{{ rsvp.grouper|capfirst }}</th>
+                        </tr>
+                        {% for person in rsvp.list %}
+                            <tr>
+                                <td><input type="checkbox" name="delete_{{ person.id }}"></td>
+                                <td>{{ person.user.name }}</td>
+                                <td>{{ person.num_guests }}</td>
+                                <td>{{ person.notes }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="form-actions">
+                <input type="submit" class="btn" value="Remove checked RSVPs">
+            </div>
+        </form>
+    {% else %}
         <p>No RSVPs yet!</p>
-    {% endfor %}
+    {% endif %}
 {% endblock %}
