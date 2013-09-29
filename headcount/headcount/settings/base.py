@@ -143,6 +143,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 AUTH_USER_MODEL = 'authtools.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MANDRILL_API_KEY = os.environ.get('MANDRILL_APIKEY', None)
+DEFAULT_FROM_EMAIL = 'info@lincolnloop.com'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
