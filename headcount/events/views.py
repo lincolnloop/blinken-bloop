@@ -35,6 +35,8 @@ class MapMixin(object):
                 'locations'][0]['latLng']
             obj.latitude = req['lat']
             obj.longitude = req['lng']
+        else:
+            obj.latitude = obj.longitude = ''
 
         return super(MapMixin, self).form_valid(form)
 
@@ -78,7 +80,7 @@ class CreateEvent(LoginRequiredMixin, FormValidMessageMixin,
 
 
 class UpdateEvent(LoginRequiredMixin, FormValidMessageMixin,
-                  generic.UpdateView):
+                  MapMixin, generic.UpdateView):
     form_class = forms.EventForm
     form_valid_message = u'Your event was updated!'
     model = models.Event
