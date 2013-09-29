@@ -39,11 +39,8 @@
         </div>
         <div>
           <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
-              {% if user.is_authenticated %}
-                <li class="navbar-text">Hi, {{ user.name }}!</li>
-              {% endif %}
-            <li><a href="/">Home</a></li>
             {% if user.is_authenticated %}
+                <li class="navbar-text">Hi, {{ user.name }}!</li>
                 <li><a href="{% url 'events:dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'events:create' %}">Create Event</a></li>
                 <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
