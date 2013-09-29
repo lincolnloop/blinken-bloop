@@ -25,7 +25,8 @@ class EventForm(forms.ModelForm):
     )
     show_on_map = forms.BooleanField(initial=True,
                                      help_text=_('Event location is mappable'),
-                                     label=_('Show a map?'))
+                                     label=_('Show a map?'),
+                                     required=False)
 
     class Meta:
         model = models.Event
@@ -108,6 +109,10 @@ class EventForm(forms.ModelForm):
             ),
             actions
         )
+
+        if self.instance.pk:
+            self.fields['show_on_map'].initial = all([self.instance.latitude,
+                                                      self.instance.longitude])
 
     def clean(self):
         cleaned_data = super(EventForm, self).clean()
