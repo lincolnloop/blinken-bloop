@@ -12,10 +12,11 @@ from .test_models import create_user
 
 class EventFormTests(TestCase):
     def setUp(self):
-        # THIS DOES NOT WORK.
         self.form_data = {
-            'start': arrow.utcnow().datetime,
-            'end': arrow.utcnow().datetime,
+            'start_0': '10/05/2016',
+            'start_1': '7:00 AM',
+            'end_0': '10/05/2016',
+            'end_1': '12:00 PM',
             'title': 'Test Event',
             'description': '## Test Event',
             'location': 'My House',
@@ -28,5 +29,4 @@ class EventFormTests(TestCase):
         data = self.form_data.copy()
         data.update({'host': host.pk})
         form = forms.EventForm(data)
-        import pdb; pdb.set_trace()
         self.assertTrue(form.is_valid())
