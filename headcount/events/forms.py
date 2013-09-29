@@ -135,15 +135,15 @@ class RSVPForm(forms.ModelForm):
             Div(
                 Submit('save', _('RSVP'),
                     css_class='primary btn-lg btn-block'),
-                css_class='col-xs-12 col-md-6'
+                css_class='col-xs-12 col-md-12'
             )
         )
 
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
         self.helper.form_tag = True
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-10'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
             Fieldset(
                 u'',

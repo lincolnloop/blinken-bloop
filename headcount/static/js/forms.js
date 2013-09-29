@@ -10,4 +10,12 @@ $(document).ready(function(){
     if (parseInt(maxGuests, 10) > 0) {
         $('#id_num_guests').attr('max', maxGuests);
     }
+
+    $('#div_id_response').on('change', 'input[name=response]', function (){
+        if ($(this).attr('value') == 'no') {
+            $('#div_id_num_guests').hide();
+        } else {
+            $('#div_id_num_guests').show();
+        }
+    });
 });
