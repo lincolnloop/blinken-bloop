@@ -19,12 +19,7 @@
         <h3>Where</h3>
         <p>{{ event.location }}</p>
 
-        <p>Currently attending: {% if event.max_attendees %}
-                {{ event.rsvps.possible|length }}/{{ event.max_attendees }} maximum
-            {% else %}
-                {{ event.rsvps.possible|length }}
-            {% endif %}
-        </p>
+        <p>Currently attending: {{ event.total_coming }}/{{ event.max_attendees }}</p>
         {% if event.max_guests = '0' %}
             <p id="max-0" class="max-guests">No additional guests, please.</p>
         {% elif event.max_guests > 0 %}

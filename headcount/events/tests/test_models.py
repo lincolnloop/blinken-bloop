@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -21,12 +22,7 @@ class EventModelTests(TestCase):
             host=user,
             title=u'Test Event',
             description=u'A test event with some **markdown**',
-            venue_name=u'Test Venue',
-            address=u'1 Infinite Loop',
-            city=u'Cupertino',
-            state=u'California',
-            latitude=37.33174,
-            longitude=-122.03033,
+            location=u'1 Infinite Loop, Cupertino, CA',
             max_attendees=20,
             max_guests=1,
             cost=u'Free',
@@ -36,6 +32,7 @@ class EventModelTests(TestCase):
 
         self.assertTrue(isinstance(event, models.Event))
         self.assertIn(u'<strong>', event.description_html)
+        self.assertTrue(event.shortid)
 
 
 class RSVPModelTests(TestCase):
@@ -54,27 +51,38 @@ class RSVPModelTests(TestCase):
         return event
 
     def test_creation(self):
+        user = create_user(email=u'testy@example.com')
         event = self.create_event()
 
         rsvp = models.RSVP.objects.create(
             event=event,
             num_guests=0,
             response=models.RSVP.RESPONSE_CHOICES.yes,
-            name=u'Test Testerson',
-            email=u'test@example.com'
+            user=user,
+            notes=u'Test'
         )
 
         self.assertTrue(isinstance(rsvp, models.RSVP))
         self.assertIn(rsvp, event.rsvps.all())
+        self.assertEqual(rsvp.party_size, 1)
+
+        with self.assertRaises(IntegrityError):
+            rsvp = models.RSVP.objects.create(
+                event=event,
+                num_guests=0,
+                response=models.RSVP.RESPONSE_CHOICES.yes,
+                user=user,
+                notes=u'Test'
+            )
 
     def test_too_many_guests(self):
+        user = create_user(email=u'testy@example.com')
         event = self.create_event()
         rsvp = models.RSVP.objects.create(
             event=event,
             num_guests=100,
             response=models.RSVP.RESPONSE_CHOICES.yes,
-            name=u'Too Many Guests',
-            email=u'icantcount@example.com'
+            user=user
         )
         with self.assertRaises(ValidationError):
             rsvp.clean()
