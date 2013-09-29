@@ -159,24 +159,36 @@ class RSVPForm(forms.ModelForm):
             self.fields['user'].widget = forms.HiddenInput()
 
     def clean(self):
+        """
+        If max_attendees has been set:
+            1. If we have an instance and they are reducing the number of
+                guests, allow this.
+            2. Calculate total. If an update, roll back current party size
+                based on what they previously have set. If not an update
+                just add to the total.
+            3. If total exceeds the max, raise validation error.
+        """
         cleaned_data = super(RSVPForm, self).clean()
         event = cleaned_data.get('event')
+
+        if not event.max_attendees:
+            return cleaned_data
+
         coming = cleaned_data.get('num_guests', 0) + 1
 
         if self.instance.pk:
-            pass
+            if coming < self.instance.party_size:
+                return cleaned_data
+
+        if self.instance.pk:
+            new_total = event.total_coming - self.instance.party_size + coming
         else:
-            if event.total_coming >= event.max_attendees:
-                raise forms.ValidationError(
-                    _("We're sorry, the maximum number of guests has "
-                        "been reached."))
-
             new_total = event.total_coming + coming
-            if new_total > event.max_attendees:
-                left = event.max_attendees - event.total_coming
 
-                raise forms.ValidationError(
-                    _("We're sorry, there are only {0} space(s) left.".format(
-                        left)))
+        if new_total > event.max_attendees:
+            spaces_left = event.max_attendees - event.total_coming
+            raise forms.ValidationError(
+                _("We're sorry, there are only {0} space(s) left.".format(
+                    spaces_left)))
 
         return cleaned_data
