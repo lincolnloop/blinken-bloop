@@ -131,12 +131,12 @@ class RSVP(TimeStampedModel):
     )
     event = models.ForeignKey(Event, related_name='rsvps')
     num_guests = models.PositiveIntegerField(
-        _('How many guests are you bringing?'), default=0)
+        _('Bringing any guests?'), default=0)
     response = models.CharField(
         _('Are you coming?'), choices=RESPONSE_CHOICES,
         default=RESPONSE_CHOICES.yes, max_length=10)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='rsvps')
-    notes = models.TextField(_('Any notes for the organizer'), blank=True)
+    notes = models.TextField(_('Note for the organizer'), blank=True)
     objects = PassThroughManager.for_queryset_class(RSVPQuerySet)()
 
     class Meta:

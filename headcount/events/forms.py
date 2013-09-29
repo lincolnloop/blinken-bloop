@@ -117,9 +117,14 @@ class RSVPForm(forms.ModelForm):
     class Meta:
         model = models.RSVP
         widgets = {
-            'num_guests': forms.NumberInput,
+            'num_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
             'response': forms.RadioSelect,
         }
+
+    class Media:
+        js = (
+            'js/forms.js',
+        )
 
     def __init__(self, *args, **kwargs):
         event = kwargs.pop('event', None)
@@ -129,10 +134,14 @@ class RSVPForm(forms.ModelForm):
         actions = FormActions(
             Div(
                 Submit('save', _('RSVP'),
-                       css_class='primary btn-lg btn-block'),
+                    css_class='primary btn-lg btn-block'),
                 css_class='col-xs-12 col-md-6'
             )
         )
+        guests = Fieldset(u'num_guests',)
+        # import pdb; pdb.set_trace()
+        if event.max_guests > 0:
+            guests = ''
 
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
@@ -145,7 +154,9 @@ class RSVPForm(forms.ModelForm):
                 u'event',
                 u'user',
                 u'response',
-                u'num_guests',
+            ),
+            guests,
+            Fieldset(
                 u'notes',
             ),
             actions
