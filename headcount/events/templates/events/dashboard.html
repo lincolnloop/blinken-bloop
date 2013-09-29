@@ -14,14 +14,14 @@
                     <div class="col-md-6 rsvp-info">
                         <h4>
                             {% if event.max_attendees %}
-                                {{ event.rsvps.all|length }}/{{ event.max_attendees }}
+                                {{ event.rsvps.possible|length }}/{{ event.max_attendees }}
                             {% else %}
-                                {{ event.rsvps.coming|length }}
+                                {{ event.rsvps.possible|length }}
                             {% endif %} RSVPs
                             {% if event.rsvps.all|length %}: 
-                                {{ event.rsvps.yes|length }} yes{{ event.rsvps.coming|length|pluralize:"es" }}
+                                {{ event.rsvps.yes|length }} yes{{ event.rsvps.yes|length|pluralize:"es" }}
                                 {% if event.rsvps.maybe|length %}, {{ event.rsvps.maybe|length }} maybe{{ event.rsvps.maybe|length|pluralize }}{% endif %}
-                                {% if event.rsvps.not_coming|length %}, {{ event.rsvps.not_coming|length }} no{{ event.rsvps.no|length|pluralize }}{% endif %}
+                                {% if event.rsvps.no|length %}, {{ event.rsvps.no|length }} no{{ event.rsvps.no|length|pluralize }}{% endif %}
                             {% endif %}
                         </h4>
                         <div class="rsvps">
