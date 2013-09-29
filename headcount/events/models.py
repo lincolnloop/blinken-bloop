@@ -125,9 +125,9 @@ class Event(TimeStampedModel, TimeFramedModel):
 
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
-        ('yes', 'Yes'),
-        ('maybe', 'Maybe'),
-        ('no', 'No'),
+        ('yes', 'Yes!'),
+        ('maybe', 'Maybe?'),
+        ('no', 'No :('),
     )
     event = models.ForeignKey(Event, related_name='rsvps')
     num_guests = models.PositiveIntegerField(
