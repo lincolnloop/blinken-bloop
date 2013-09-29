@@ -37,3 +37,12 @@ class BaseTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'events/event_form.html')
+
+    def test_event_detail_edit_only_accessible_by_owner(self):
+        evil_user = self._create_user(email=u'evil@example.com')
+        self._login_user(email=evil_user.email)
+
+        url = reverse('events:edit', kwargs={'slug': self.event.shortid})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 404)
