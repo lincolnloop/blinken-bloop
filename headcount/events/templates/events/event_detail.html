@@ -11,10 +11,7 @@
 {% endblock %}
 
 {% block edit_delete %}
-<span class="edit-delete pull-right">
-    <a href="{% url 'events:edit' event.shortid %}">Edit</a>
-    <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
-</span>
+    {% include 'events/_edit_delete.html' %}
 {% endblock %}
 
 {% block host %}you!{% endblock %}
