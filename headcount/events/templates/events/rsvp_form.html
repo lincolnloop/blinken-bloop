@@ -33,10 +33,7 @@
         <h3>Where</h3>
         <p>{{ event.location }}</p>
         {% if event.latitude and event.longitude %}
-        <div id="map" style="width: 400px; height: 200px;" data-lat="{{ event.latitude }}" data-long="{{ event.longitude }}"></div>
-            {% comment %}
-            <img src="http://open.mapquestapi.com/staticmap/v4/getmap?key={{ osm_api_key }}&size=400,200&zoom=10&center={{ event.latitude }},{{ event.longitude }}&scalebar=false&mcenter={{ event.latitude }},{{ event.longitude }}">
-            {% endcomment %}
+        <div id="map" style="width: 400px; height: 300px;" data-lat="{{ event.latitude }}" data-long="{{ event.longitude }}"></div>
         {% endif %}
 
         <h3>More info</h3>
@@ -87,6 +84,7 @@
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
             maxZoom: 18
         }).addTo(map);
+        var marker = L.marker([latitude, longitude]).addTo(map);
     }
 </script>
 {% endblock %}
