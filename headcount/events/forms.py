@@ -142,8 +142,8 @@ class RSVPForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
         self.helper.form_tag = True
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-10'
+        self.helper.label_class = 'col-lg-4'
+        self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
             Fieldset(
                 u'',
