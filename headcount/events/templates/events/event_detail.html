@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ event.title }}</h2>
+    <p>{{ event.location }}</p>
+    <p>{{ event.start }} &ndash; {{ event.end }}</p>
+    {{ event.description_html|safe }}
+
+    <hr>
+
+    {% regroup event.rsvps.all by response as rsvp_set %}
+    {% for rsvp in rsvp_set %}
+        <h3>{{ rsvp.grouper|capfirst }}</h3>
+        <ul>
+            {% for person in rsvp.list %}
+                <li>{{ person.user.name }}: {{ person.response }}</li>
+            {% endfor %}
+        </ul>
+    {% empty %}
+        <p>No RSVPs yet!</p>
+    {% endfor %}
+{% endblock %}

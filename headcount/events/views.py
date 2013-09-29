@@ -168,6 +168,14 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         return self.get_event().get_absolute_url()
 
 
+class EventDetail(LoginRequiredMixin, generic.DetailView):
+    model = models.Event
+    slug_field = 'shortid'
+
+    def get_queryset(self):
+        return self.model.objects.by_host(host=self.request.user)
+
+
 class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
                  generic.UpdateView):
     form_class = forms.RSVPForm

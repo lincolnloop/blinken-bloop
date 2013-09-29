@@ -101,7 +101,7 @@ class Event(TimeStampedModel, TimeFramedModel):
         super(Event, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse_lazy('events:detail', kwargs={'slug': self.shortid})
+        return reverse_lazy('events:rsvp', kwargs={'slug': self.shortid})
 
     @property
     def total_coming(self):
