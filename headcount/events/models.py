@@ -131,11 +131,12 @@ class RSVP(TimeStampedModel):
         verbose_name_plural = _('RSVPs')
 
     def clean(self):
-        if self.num_guests > self.event.max_guests:
+        if self.event.max_guests and self.num_guests > self.event.max_guests:
             raise ValidationError(
                 _('The event only allows {0.event.max_guests} '
                   'guest(s).'.format(self)))
 
 models.signals.post_save.connect(signals.event_creation, sender=Event)
 models.signals.post_save.connect(signals.event_change, sender=Event)
+models.signals.pre_delete.connect(signals.event_delete, sender=Event)
 models.signals.post_save.connect(signals.rsvp_creation, sender=RSVP)

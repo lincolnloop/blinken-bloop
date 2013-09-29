@@ -1,0 +1,7 @@
+Hi!
+
+We're sorry to have to tell you this, but {{ instance.title }} has been cancelled by the host.
+
+Thanks!
+
+The Headcount.io Team
