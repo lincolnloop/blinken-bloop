@@ -95,7 +95,7 @@ class EventForm(forms.ModelForm):
                     Div(u'max_guests',
                         css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     Div(u'cost',
-                        css_class=u'col-xs-12 col-md-12 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-8 no-horizontal'),
                     css_class=u'row'
                 ),
             ),
