@@ -63,7 +63,7 @@
         <h3>Your RSVPs</h3>
         <ul class="your-rsvps">
         {% for rsvp in rsvps %}
-            <li><a href="{{ event.get_absolute_url }}"><strong>{{ rsvp.event.title }}</strong> &ndash; RSVPed  <span class="{{ rsvp.response }}">{{ rsvp.response }}</span></a></li>
+            <li><a href="{{ rsvp.event.get_absolute_url }}"><strong>{{ rsvp.event.title }}</strong> &ndash; RSVPed  <span class="{{ rsvp.response }}">{{ rsvp.response }}</span></a></li>
         {% endfor %}
         </ul>
     {% endif %}
