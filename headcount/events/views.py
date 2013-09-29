@@ -9,6 +9,7 @@ from django.utils.decorators import classonlymethod
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
+from authtools.models import User
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 import misaka
 
@@ -18,20 +19,22 @@ from . import forms
 from . import models
 
 
-class Dashboard(LoginRequiredMixin, generic.ListView):
-    model = models.Event
+class Dashboard(LoginRequiredMixin, generic.DetailView):
+    model = User
     template_name = 'events/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super(Dashboard, self).get_context_data(**kwargs)
         context.update({
-            'domain': Site.objects.get_current().domain
+            'domain': Site.objects.get_current().domain,
+            'events': self.request.user.events.upcoming(),
+            'rsvps': self.request.user.rsvps.upcoming()
         })
 
         return context
 
-    def get_queryset(self):
-        return self.model.objects.by_host(host=self.request.user).upcoming()
+    def get_object(self):
+        return self.request.user
 
 
 class CreateEvent(LoginRequiredMixin, FormValidMessageMixin,

@@ -3,56 +3,66 @@
 {% block content %}
     <h2>Dashboard</h2>
 
-    {% for event in object_list %}
-        <article class="col-md-12 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
-                        <span class="edit-delete pull-right">
-                            <a href="{% url 'events:edit' event.shortid %}">Edit</a>
-                            <a href="{% url 'events:email_rsvps' event.shortid %}">Email RSVPs</a>
-                            <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
-                        </span>
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="col-md-6 rsvp-info">
-                        <h4>
-                            <span class="rsvp-count">{{ event.total_coming }}{% if event.max_attendees %}/{{ event.max_attendees }}{% endif %} RSVPs</span>
-                            {% if event.rsvps.all|length %} &ndash;
-                                {{ event.yes_coming }} <span class="yes">yes{{ event.yes_coming|pluralize:"es" }}</span>
-                                {% if event.rsvps.maybe|length %}
-                                    , {{ event.maybe_coming }} <span class="maybe">maybe{{ event.maybe_coming|pluralize }}</span>
+    {% if events %}
+        <h3>Your Events</h3>
+        {% for event in events %}
+            <article class="col-md-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
+                            <span class="edit-delete pull-right">
+                                <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+                                <a href="{% url 'events:email_rsvps' event.shortid %}">Email RSVPs</a>
+                                <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6 rsvp-info">
+                            <h4>
+                                <span class="rsvp-count">{{ event.total_coming }}{% if event.max_attendees %}/{{ event.max_attendees }}{% endif %} RSVPs</span>
+                                {% if event.rsvps.all|length %} &ndash;
+                                    {{ event.yes_coming }} <span class="yes">yes{{ event.yes_coming|pluralize:"es" }}</span>
+                                    {% if event.rsvps.maybe|length %}
+                                        , {{ event.maybe_coming }} <span class="maybe">maybe{{ event.maybe_coming|pluralize }}</span>
+                                    {% endif %}
+                                    {% if event.rsvps.no|length %}
+                                        , {{ event.rsvps.no|length }} <span class="no">no{{ event.rsvps.no|length|pluralize }}</span>
+                                    {% endif %}
                                 {% endif %}
-                                {% if event.rsvps.no|length %}
-                                    , {{ event.rsvps.no|length }} <span class="no">no{{ event.rsvps.no|length|pluralize }}</span>
-                                {% endif %}
-                            {% endif %}
-                        </h4>
-                        <div class="rsvps">
-                        {% for rsvp in event.rsvps.yes %}
-                            {% include 'events/_response.html' %}
-                        {% endfor %}
-                        {% for rsvp in event.rsvps.maybe %}
-                            {% include 'events/_response.html' %}
-                        {% endfor %}
-                        {% for rsvp in event.rsvps.no %}
-                            {% include 'events/_response.html' %}
-                        {% endfor %}
+                            </h4>
+                            <div class="rsvps">
+                            {% for rsvp in event.rsvps.yes %}
+                                {% include 'events/_response.html' %}
+                            {% endfor %}
+                            {% for rsvp in event.rsvps.maybe %}
+                                {% include 'events/_response.html' %}
+                            {% endfor %}
+                            {% for rsvp in event.rsvps.no %}
+                                {% include 'events/_response.html' %}
+                            {% endfor %}
+                            </div>
+                            <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
                         </div>
-                        <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
+                        <div class="col-md-6 event-info">
+                            <p>{{ event.location }}</p>
+                            <p>{{ event.start }} &ndash; {{ event.end }}</p>
+                        </div>
                     </div>
-                    <div class="col-md-6 event-info">
-                        <p>{{ event.location }}</p>
-                        <p>{{ event.start }} &ndash; {{ event.end }}</p>
+                    <div class="panel-footer">
+                        <span class="rsvp-url">Shareable RSVP URL: <a href="{{ event.get_absolute_url }}">http://{{ domain }}{{ event.get_absolute_url }}</a></span>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    <span class="rsvp-url">Shareable RSVP URL: <a href="{{ event.get_absolute_url }}">http://{{ domain }}{{ event.get_absolute_url }}</a></span>
-                </div>
-            </div>
-        </article>
-    {% empty %}
-        <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
-    {% endfor %}
+            </article>
+        {% empty %}
+            <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
+        {% endfor %}
+    {% endif %}
+
+    {% if rsvps %}
+        <h3>Your RSVPs</h3>
+        {% for rsvp in rsvps %}
+            <p>{{ rsvp.event.title }}</p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -54,6 +54,9 @@ class RSVPQuerySet(models.query.QuerySet):
     def possible(self):
         return self.exclude(response=RSVP.RESPONSE_CHOICES.no)
 
+    def upcoming(self):
+        return self.filter(event__start__gt=arrow.utcnow().datetime)
+
 
 class Event(TimeStampedModel, TimeFramedModel):
     host = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
