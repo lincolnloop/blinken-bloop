@@ -17,8 +17,8 @@ def create_event(host):
         max_attendees=20,
         max_guests=1,
         cost=u'Free',
-        start=arrow.utcnow().datetime,
-        end=arrow.utcnow().replace(days=+1).datetime
+        start=arrow.utcnow().replace(days=+1).datetime,
+        end=arrow.utcnow().replace(days=+2).datetime
     )
 
 
