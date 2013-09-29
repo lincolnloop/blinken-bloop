@@ -132,6 +132,7 @@ THIRD_PARTY_APPS = (
     'floppyforms',
     'djrill',
     'gunicorn',
+    'raven.contrib.django.raven_compat',
 )
 LOCAL_APPS = (
     'events',
