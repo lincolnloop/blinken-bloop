@@ -6,9 +6,11 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ event.title }}</h2>
+<div class="event-page">
+    <h1>{{ event.title }}</h1>
+    <p class="hosted-by">Hosted by {{ event.host.name }}</p>
+
     <div class="col-md-6">
-        <p>Hosted by {{ event.host.name }}</p>
         <h3>Description</h3>
         {{ event.description_html|safe }}
 
@@ -19,7 +21,8 @@
         <h3>Where</h3>
         <p>{{ event.location }}</p>
 
-        <p>Currently attending: {% if event.max_attendees %}
+        <h3>More info</h3>
+        <p><strong>Currently attending:</strong> {% if event.max_attendees %}
                 {{ event.rsvps.possible|length }}/{{ event.max_attendees }} maximum
             {% else %}
                 {{ event.rsvps.possible|length }}
@@ -28,19 +31,26 @@
         {% if event.max_guests = '0' %}
             <p id="max-0" class="max-guests">No additional guests, please.</p>
         {% elif event.max_guests > 0 %}
-            <p id="max-{{ event.max_guests }}" class="max-guests">Max guests per attendee: {{ event.max_guests }}</p>
+            <p id="max-{{ event.max_guests }}" class="max-guests"><strong>Max guests per attendee:</strong> {{ event.max_guests }}</p>
         {% else %}
             <p id="max-none" class="max-guests">Feel free to invite as many people as you like!</p>
         {% endif %}
         {% if event.cost %}
-            <p>Cost: {{ event.cost }}</p>
+            <p><strong>Cost:</strong> {{ event.cost }}</p>
         {% endif %}
     </div>
+</div>
 
 {% if form %}
     <div class="rsvp-form col-md-6">
-        <h3>RSVP now!</h3>
-        {% crispy form %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">RSVP now!</h3>
+            </div>
+            <div class="panel-body">
+                {% crispy form %}
+            </div>
+        </div>
     </div>
 {% endif %}
 {% endblock %}

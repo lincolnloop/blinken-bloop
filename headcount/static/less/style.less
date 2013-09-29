@@ -109,6 +109,7 @@ h4 {
 }
 
 .panel {
+    .border-radius(15px);
     background: lighten(@bg-color, 3%);
     border: 1pt solid black;
 
@@ -123,6 +124,8 @@ h4 {
     }
 
     .panel-heading {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         h3 {
             font-size: 2.4rem;
 
@@ -205,6 +208,21 @@ h4 {
     }
 }
 
+.event-page {
+    h1 {
+        margin-bottom: 5px;
+    }
+    .hosted-by {
+        margin-top: 0;
+    }
+}
+
+.rsvp-form {
+    //.border-radius(15px);
+    //background: lighten(@bg-color, 3%);
+    padding-bottom: 20px;
+}
+
 .footer {
     margin-top: 20px;
     ul {
@@ -221,6 +239,10 @@ h4 {
 /*  *   *   *   *
 Forms stylings
 *   *   *   *   */
+
+label {
+    font-weight: 300;
+}
 
 textarea.form-control {
     height: 6em;
