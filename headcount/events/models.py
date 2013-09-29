@@ -21,6 +21,8 @@ from model_utils.models import TimeStampedModel, TimeFramedModel
 
 from . import signals
 
+from .timezone_data import TZ_CHOICES
+
 
 def get_shortid(length=6, alphabet=string.letters + string.digits):
     return u''.join([random.choice(alphabet) for i in xrange(length)])
@@ -85,6 +87,9 @@ class Event(TimeStampedModel, TimeFramedModel):
         blank=True, default='', max_length=150)
     shortid = models.CharField(blank=True, editable=False, max_length=10)
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
+    timezone = models.CharField(
+        _('Timezone'), choices=TZ_CHOICES,
+        default=settings.TIME_ZONE, max_length=63)
 
     class Meta:
         ordering = ['start', 'end', 'title']

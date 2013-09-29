@@ -84,18 +84,20 @@ class EventForm(forms.ModelForm):
                 u'description',
                 Div(
                     Div(u'start',
-                        css_class=u'col-xs-12 col-md-4 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-3 col-md-offset-3 no-horizontal'),
                     Div(u'end',
-                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-3 no-horizontal'),
+                    Div(u'timezone',
+                        css_class=u'col-xs-12 col-md-3 no-horizontal'),
                     css_class=u'row'
                 ),
                 Div(
                     Div(u'max_attendees',
-                        css_class=u'col-xs-12 col-md-4 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-3 col-md-offset-3 no-horizontal'),
                     Div(u'max_guests',
-                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-3 no-horizontal'),
                     Div(u'cost',
-                        css_class=u'col-xs-12 col-md-8 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-9 col-md-offset-3 no-horizontal'),
                     css_class=u'row'
                 ),
             ),
