@@ -1,5 +1,15 @@
 {% extends "events/rsvp_form.html" %}
 
+{% block scripts %}
+    {{ block.super }}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <script src="{{ STATIC_URL }}js/rsvp-details.js"></script>
+{% endblock %}
+
 {% block edit_delete %}
 <span class="edit-delete pull-right">
     <a href="{% url 'events:edit' event.shortid %}">Edit</a>
@@ -24,11 +34,4 @@
     {% else %}
         <p>No RSVPs yet!</p>
     {% endif %}
-{% endblock %}
-
-{% block scripts %}
-    {{ block.super }}
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-    <script src="{{ STATIC_URL }}js/rsvp-details.js"></script>
 {% endblock %}
