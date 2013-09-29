@@ -149,6 +149,11 @@ class RSVP(TimeStampedModel):
                 _('The event only allows {0.event.max_guests} '
                   'guest(s).'.format(self)))
 
+    @property
+    def party_size(self):
+        """ Return guests + RSVPer """
+        return self.num_guests + 1
+
 models.signals.post_save.connect(signals.event_creation, sender=Event)
 models.signals.post_save.connect(signals.event_change, sender=Event)
 models.signals.pre_delete.connect(signals.event_delete, sender=Event)
