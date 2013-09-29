@@ -116,6 +116,9 @@ class EventForm(forms.ModelForm):
 class RSVPForm(forms.ModelForm):
     class Meta:
         model = models.RSVP
+        widgets = {
+            'response': forms.RadioSelect
+        }
 
     def __init__(self, *args, **kwargs):
         event = kwargs.pop('event', None)
