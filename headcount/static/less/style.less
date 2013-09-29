@@ -7,6 +7,8 @@
 @fuchsia: #ff33a0;
 @pink: #ffa9a9;
 @yellow: #e0ff66;
+@light-blue: #afb9ff;
+@light-green: #acff99;
 
 .border-radius (@radius: 5px) {
   -webkit-border-radius: @radius;
@@ -53,11 +55,16 @@ h1, h2, h3, h4, h5 {
 h1 {
     font-size: 4rem;
     font-weight: 100;
+
+    &.splashy {
+        color: @teal;
+        font-weight: 700;
+    }
 }
 
 h2 {
     font-size: 3rem;
-    font-weight: 200;
+    font-weight: 300;
     margin-bottom: 20px;
 }
 
@@ -82,6 +89,42 @@ h4 {
     li a:hover {
         background: none;
     }
+
+    .navbar-text {
+        display: block;
+        position: relative;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 15px;
+        line-height: 20px;
+    }
+}
+
+.nav .open a, .dropdown-menu {
+    color: white;
+    background: black;
+
+    &:focus, &:active {
+        color: white;
+        background: black;
+    }
+}
+
+.navbar-nav .open .dropdown-menu {
+    background: black;
+
+    li a:hover {
+        background: #111;
+    }
+}
+
+.dropdown:hover, .dropdown-toggle a:hover {
+    background: #111;
+}
+
+.dropdown-toggle a:active {
+    color: white;
+    background: black;
 }
 
 .logo {   
@@ -95,16 +138,54 @@ h4 {
     };
 }
 
-.btn-primary {
+.alert {
     background-image: none;
-    background-color: @teal;
-    color: @bg-color;
-    border: 1pt solid darken(@teal, 20%);
+    background: none;
+    border: 2pt solid white;
+    &.alert-success {
+        color: @light-green;
+        border-color: @light-green;
+    }
+    &.alert-info {
+        color: @light-blue;
+        border-color: @light-blue;
+    }
+    &.alert-warning {
+        color: @yellow;
+        border-color: @yellow;
+    }
+    &.alert-danger {
+        color: @pink;
+        border-color: red;
+    }
+}
 
+.btn {
+    background-image: none;
+    background-color: #eee;
+    color: @bg-color;
     &:hover {
-        background-color: @fuchsia;
-        border: 1pt solid darken(@fuchsia, 20%);
         color: black;
+        background-color: darken(#eee, 10%);
+        border: 1pt solid darken(#eee, 20%);
+    }
+
+    &.btn-danger {
+        background-color: @pink;
+        &:hover {
+            background-color: red;
+            border: 1pt solid darken(red, 20%);
+        };
+    }
+
+    &.btn-primary {
+        background-color: @teal;
+        border: 1pt solid darken(@teal, 20%);
+
+        &:hover {
+            background-color: @fuchsia;
+            border: 1pt solid darken(@fuchsia, 20%);
+        }
     }
 }
 
@@ -146,7 +227,7 @@ h4 {
     .panel-body {
         h4 {
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 1em;
             span {
                 font-weight: 300;
                 &.yes {
@@ -157,6 +238,10 @@ h4 {
                 }
                 &.no {
                     color: @fuchsia;
+                }
+                &.rsvp-count {
+                    font-weight: 700;
+                    font-size: 1.4em;
                 }
             }
         }
@@ -210,7 +295,7 @@ h4 {
 
 .event-page {
     h1 {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
     .hosted-by {
         margin-top: 0;
@@ -218,8 +303,6 @@ h4 {
 }
 
 .rsvp-form {
-    //.border-radius(15px);
-    //background: lighten(@bg-color, 3%);
     padding-bottom: 20px;
 }
 
@@ -249,7 +332,7 @@ textarea.form-control {
 }
 
 #home-page-form {
-    margin-top: 30px;
+    margin-top: -30px;
 }
 
 .asteriskField {
@@ -263,7 +346,7 @@ textarea.form-control {
 
 .dateinput {
     width: 110px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .timeinput {
@@ -281,17 +364,39 @@ textarea.form-control {
     text-align: left;
 }
 
+.row {
+    margin-bottom: 2em;
+}
+
+#hint_id_description {
+    .row();
+}
+
 .form-actions {
     margin-left: 66.666%;
     width: 33.333%;
 
-    input[type=submit] {
+    .btn-large {
         padding: 10px 0;
         font-size: 2rem;
     }
 }
 
+.deletion-form {
+    .form-actions {
+        margin-left: 33.333%;
+        width: 66.666%;
+        text-align: right;
+
+        .btn-large {
+            padding: 10px 20px;
+            font-size: 2rem;
+        }
+    }
+}
+
 .help-block {
+    .help();
     color: #aaa;
 }
 
@@ -299,10 +404,14 @@ textarea.form-control {
     ul {
         list-style-type: none;
         padding: 0;
+        margin: 0;
     }
 
     .form-group {
         clear: both;
-        padding-bottom: 5px;
     }
+}
+
+.form-group .controls {
+    padding-bottom: 10px;
 }

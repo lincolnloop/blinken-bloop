@@ -20,19 +20,27 @@
     <div class="navbar">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/"><img class="logo" src="/static/img/logo.png"></a>
-        </div>
-        <div class="navbar-collapse collapse">
-<!--           <ul class="nav navbar-nav">
+          <a class="navbar-brand hidden-xs hidden-sm" href="/"><img class="logo" src="/static/img/logo.png"></a>
+          <ul class="nav navbar-nav hidden-md hidden-lg">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="logo" src="/static/img/logo.png"> <b class="caret"></b></a>
               <ul class="dropdown-menu">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'events:dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'events:create' %}">Create Event</a></li>
+                    <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+                {% else %}
+                    <li><a href="{% url 'accounts:login' %}">Log in</a></li>
+                    <li><a href="{% url 'register' %}">Sign up</a></li>
+                {% endif %}
               </ul>
             </li>
-          </ul> -->
-          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+        <div>
+          <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
               {% if user.is_authenticated %}
-                  <li class="navbar-text">Hi, {{ user.name }}</li>
+                <li class="navbar-text">Hi, {{ user.name }}!</li>
               {% endif %}
             <li><a href="/">Home</a></li>
             {% if user.is_authenticated %}
@@ -52,7 +60,7 @@
             <div class="messages">
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="alert alert-dismissable alert-{{ message.tags }}">
+                       <div class="alert alert-dismissable alert-{{ message.tags }}">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             {{ message }}
                         </div>
@@ -72,7 +80,6 @@
                     <li><a href="{% url 'events:create' %}">Create Event</a></li>
                 {% endif %}
                 <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
             </ul>
         </div>
     </div>

@@ -7,10 +7,12 @@
 
 {% block content %}
 <div class="event-page">
-    <h1>{{ event.title }}</h1>
-    <p class="hosted-by">Hosted by {{ event.host.name }}</p>
+    <div class="col-xs-12 col-md-12">
+        <h1>{{ event.title }}</h1>
+        <p class="hosted-by">Hosted by {{ event.host.name }}</p>
+    </div>
 
-    <div class="col-md-6">
+    <div class="col-xs-12 col-md-6">
         <h3>Description</h3>
         {{ event.description_html|safe }}
 
@@ -22,22 +24,22 @@
         <p>{{ event.location }}</p>
 
         <h3>More info</h3>
-        <p>Currently attending: {{ event.total_coming }}/{{ event.max_attendees }}</p>
+        <p>Currently attending: <strong>{{ event.total_coming }}{% if event.max_attendees %}/{{ event.max_attendees }}{% endif %}</strong></p>
         {% if event.max_guests = '0' %}
             <p id="max-0" class="max-guests">No additional guests, please.</p>
         {% elif event.max_guests > 0 %}
-            <p id="max-{{ event.max_guests }}" class="max-guests"><strong>Max guests per attendee:</strong> {{ event.max_guests }}</p>
+            <p id="max-{{ event.max_guests }}" class="max-guests">Max guests per attendee: <strong>{{ event.max_guests }}</strong></p>
         {% else %}
-            <p id="max-none" class="max-guests">Feel free to invite as many people as you like!</p>
+            <p id="max-none" class="max-guests"><strong>Feel free to invite as many people as you like!</strong></p>
         {% endif %}
         {% if event.cost %}
-            <p><strong>Cost:</strong> {{ event.cost }}</p>
+            <p>Cost: <strong>{{ event.cost }}</strong></p>
         {% endif %}
     </div>
 </div>
 
 {% if form %}
-    <div class="rsvp-form col-md-6">
+    <div class="rsvp-form col-xs-12 col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">RSVP now!</h3>

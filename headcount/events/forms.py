@@ -72,8 +72,8 @@ class EventForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
         self.helper.form_tag = render_form_tag
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-10'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9'
         self.helper.layout = Layout(
             Fieldset(
                 u'',
@@ -94,7 +94,7 @@ class EventForm(forms.ModelForm):
                     Div(u'max_guests',
                         css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     Div(u'cost',
-                        css_class=u'col-xs-12 col-md-4 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-12 no-horizontal'),
                     css_class=u'row'
                 ),
             ),
@@ -142,8 +142,8 @@ class RSVPForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
         self.helper.form_tag = True
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-lg-5'
+        self.helper.field_class = 'col-lg-7'
         self.helper.layout = Layout(
             Fieldset(
                 u'',

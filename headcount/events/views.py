@@ -80,8 +80,8 @@ class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
         return self.model.objects.by_host(host=self.request.user).upcoming()
 
     def delete(self, request, *args, **kwargs):
-        messages.success(request, _('OK, we deleted the event and notified any'
-                                    '"yes" or "maybe" RSVPs'))
+        messages.success(request, _('OK, we deleted the event and notified all '
+                                    '"yes" or "maybe" RSVPs.'))
         return super(DeleteEvent, self).delete(request, *args, **kwargs)
 
 

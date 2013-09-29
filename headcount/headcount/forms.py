@@ -27,8 +27,8 @@ class HeadcountUserCreationForm(UserCreationForm):
             'name',
             'email',
             Div(
-                Div(u'password1', css_class=u'col-xs-12 col-md-6'),
-                Div(u'password2', css_class=u'col-xs-12 col-md-6'),
+                Div(u'password1', css_class=u'col-xs-12 col-md-5'),
+                Div(u'password2', css_class=u'col-xs-12 col-md-6 col-md-offset-1'),
                 css_class=u'row'
             ),
             actions

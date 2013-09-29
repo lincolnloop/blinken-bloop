@@ -1,0 +1,15 @@
+<div>
+    <span class="response yes">Y</span>
+    {% if rsvp.user.name %}
+        <span title="{{ rsvp.user.email }}">{{ rsvp.user.name }}</span>
+    {% else %}
+        {{ rsvp.user.email }}
+    {% endif %}
+    {% if rsvp.num_guests and rsvp.response != 'no' %}
+        <span class="guests"> + {{ rsvp.num_guests }}</span>
+    {% endif %}
+    {% if rsvp.notes %}
+        &nbsp;
+        <span class="notes glyphicon glyphicon-envelope" title='"{{ rsvp.notes }}"'></span>
+    {% endif %}
+</div>

@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Are you sure you want delete {{ object.title }}?</h2>
-    {% if event.rsvps.coming or event.rsvps.maybe %}
-        <p>We'll notify XXXXXX people that the event isn't happening.</p>
+    <h2>Are you sure you want to delete <strong>{{ object.title }}</strong>?</h2>
+    {% if event.total_coming %}
+        <p>We'll notify {{ event.rsvps.possible.count }} pe{{ event.rsvps.possible.count|pluralize:"rson,ople"}} that the event isn't happening.</p>
     {% else %}
         <p>No one has RSVP'd "yes", so we can just delete it like nothing happened.</p>
     {% endif %}
 
-    <form method="POST">
+    <form class="deletion-form" method="POST">
         {% csrf_token %}
         <div class="form-actions">
-            <a href="btn btn-link" href="{% url 'events:dashboard' %}">No, I changed my mind</a>
-            <input type="submit" class="btn btn-danger" value="Yeah, get rid of it">
+            <a href="btn btn-large btn-link" href="{% url 'events:dashboard' %}">No, I changed my mind</a>&nbsp;
+            <input type="submit" class="btn btn-large btn-danger" value="Yeah, get rid of it">
         </div>
     </form>
 {% endblock %}
