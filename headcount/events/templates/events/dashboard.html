@@ -7,16 +7,20 @@
         <article class="col-md-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ event.title }}</h3>
-                    <p><a href="{% url 'events:detail' event.shortid %}">Manage RSVPs</a> | <a href="http://{{ domain }}{{ event.get_absolute_url }}">RSVP URL</a></p>
+                    <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
+                        <span class="edit-delete pull-right">
+                            <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+                            <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
+                        </span>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6 rsvp-info">
                         <h4>
                             {% if event.max_attendees %}
-                                {{ event.rsvps.possible|length }}/{{ event.max_attendees }}
+                                {{ event.total_coming }}/{{ event.max_attendees }}
                             {% else %}
-                                {{ event.rsvps.possible|length }}
+                                {{ event.total_coming }}
                             {% endif %} RSVPs
                             {% if event.rsvps.all|length %}:
                                 {{ event.rsvps.yes|length }} yes{{ event.rsvps.yes|length|pluralize:"es" }}
@@ -26,7 +30,7 @@
                         </h4>
                         <div class="rsvps">
                         {% for rsvp in event.rsvps.all %}
-                                <div>
+                            <div>
                                 {% if rsvp.response == 'yes' %}
                                     <span class="response yes">Y</span>
                                 {% elif rsvp.response == 'maybe' %}
@@ -45,6 +49,7 @@
                             </div>
                         {% endfor %}
                         </div>
+                        <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
                     </div>
                     <div class="col-md-6 event-info">
                         <p>{{ event.location }}</p>
@@ -52,8 +57,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <a href="{% url 'events:edit' event.shortid %}">Edit</a>
-                    <a href="{% url 'events:delete' event.shortid %}" class="text-danger pull-right">Delete</a>
+                    <span class="rsvp-url">Shareable RSVP URL: <a href="{{ event.get_absolute_url }}">http://{{ domain }}{{ event.get_absolute_url }}</a></span>
                 </div>
             </div>
         </article>
