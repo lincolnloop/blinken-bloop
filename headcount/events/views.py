@@ -36,7 +36,7 @@ class MapMixin(object):
             obj.latitude = req['lat']
             obj.longitude = req['lng']
         else:
-            obj.latitude = obj.longitude = ''
+            obj.latitude = obj.longitude = None
 
         return super(MapMixin, self).form_valid(form)
 
@@ -156,7 +156,7 @@ class EventWizard(SessionWizardView):
             event.latitude = req['lat']
             event.longitude = req['lng']
         else:
-            event.latitude = event.longitude = ''
+            event.latitude = event.longitude = None
 
         event.save()
 
