@@ -18,7 +18,7 @@
             {% csrf_token %}
             {% include 'events/_rsvp_table.html' %}
             <div class="form-actions">
-                <input type="submit" class="btn" value="Remove checked RSVPs">
+                <input type="submit" class="btn btn-danger" value="Remove checked RSVPs">
             </div>
         </form>
     {% else %}
