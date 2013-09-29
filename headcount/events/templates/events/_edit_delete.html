@@ -1,0 +1,5 @@
+<span class="edit-delete pull-right">
+    <a href="{% url 'events:email_rsvps' event.shortid %}">Email RSVPs</a>
+    <a href="{% url 'events:edit' event.shortid %}" class="glyphicon glyphicon-pencil"></a>
+    <a href="{% url 'events:delete' event.shortid %}" class="text-danger glyphicon glyphicon-remove-circle"></a>
+</span>
