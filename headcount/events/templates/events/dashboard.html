@@ -10,6 +10,7 @@
                     <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
                         <span class="edit-delete pull-right">
                             <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+                            <a href="{% url 'events:email_rsvps' event.shortid %}">Email RSVPs</a>
                             <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
                         </span>
                     </h3>

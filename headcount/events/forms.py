@@ -5,6 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Fieldset, Div, HTML
 from crispy_forms.bootstrap import FormActions
 import floppyforms as forms
+from model_utils import Choices
 
 from . import models
 
@@ -134,7 +135,7 @@ class RSVPForm(forms.ModelForm):
         actions = FormActions(
             Div(
                 Submit('save', _('RSVP'),
-                    css_class='primary btn-lg btn-block'),
+                       css_class='primary btn-lg btn-block'),
                 css_class='col-xs-12 col-md-12'
             )
         )
@@ -200,3 +201,39 @@ class RSVPForm(forms.ModelForm):
                     spaces_left)))
 
         return cleaned_data
+
+
+RSVPS_CHOICES = Choices(
+    ('all', 'All'),
+    ('yes', 'Yes'),
+    ('maybe', 'Maybe'),
+    ('no', 'No'),
+    ('possible', 'Possible (Yes and Maybe)'),
+)
+
+
+class EmailForm(forms.Form):
+    subject = forms.CharField(label=_('Subject'), max_length=255, min_length=1)
+    body = forms.CharField(help_text=_('Markdown supported'),
+                           label=_('Content'), widget=forms.Textarea)
+    include_email_address = forms.BooleanField(
+        initial=True, label=_('Include your email address?'))
+    rsvps = forms.ChoiceField(choices=RSVPS_CHOICES, initial=RSVPS_CHOICES.all,
+                              label=_('Which RSVPs should we include?'))
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        'subject',
+        'body',
+        Div(
+            Div(u'rsvps',
+                css_class=u'col-xs-12 col-md-4 no-horizontal'),
+            Div(u'include_email_address',
+                css_class=u'col-xs-12 col-md-4 no-horizontal'),
+            css_class=u'row'
+        ),
+        FormActions(
+            Submit('save', _('Send'), css_class="primary")
+        )
+    )

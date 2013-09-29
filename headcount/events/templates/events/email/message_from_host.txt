@@ -1,0 +1,15 @@
+Hi!
+
+{{ event.host.name }} wanted us to send you a note about {{ event.title }}.
+
+{% if host_email %}You can respond to him/her directly at: {{ host_email }}{% endif %}
+
+The message is below:
+
+{{ body }}
+
+------
+
+Thanks!
+
+The Headcount.io Team
