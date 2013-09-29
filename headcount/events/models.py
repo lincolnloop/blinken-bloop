@@ -90,13 +90,14 @@ class Event(TimeStampedModel, TimeFramedModel):
 
     def save(self, *args, **kwargs):
         self.description_html = misaka.html(self.description)
-        self.shortid = get_shortid()
+        if not self.shortid:
+            self.shortid = get_shortid()
 
-        try:
-            while Event.objects.get(shortid=self.shortid):
-                self.shortid = get_shortid()
-        except Event.DoesNotExist:
-            pass
+            try:
+                while Event.objects.get(shortid=self.shortid):
+                    self.shortid = get_shortid()
+            except Event.DoesNotExist:
+                pass
 
         super(Event, self).save(*args, **kwargs)
 
