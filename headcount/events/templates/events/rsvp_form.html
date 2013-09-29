@@ -61,11 +61,13 @@
                 <div class="panel-body">
                     {% if event.is_full and not rsvp %}
                         <div>
-                            <img src="{{ STATIC_URL }}img/full-badge.png" class="full pull-left"><h2>Sorry, this event is at capacity.</h2>
+                            <img src="{{ STATIC_URL }}img/full-badge.png" class="full pull-left"><!-- Icon "Celebration" designed by Scott Lewis from The Noun Project: http://thenounproject.com/noun/celebration/#icon-No6215 -->
+                            <h2>Sorry, this event is at capacity.</h2>
                         </div>
                     {% elif event.is_full and rsvp %}
                         <div>
-                            <img src="{{ STATIC_URL }}img/full-badge.png" class="full pull-left"><h2>This event is at capacity.</h2>
+                            <img src="{{ STATIC_URL }}img/full-badge.png" style="margin-top: -10px;" class="full pull-left"><!-- Icon "Celebration" designed by Scott Lewis from The Noun Project: http://thenounproject.com/noun/celebration/#icon-No6215 -->
+                            <h2>This event is at capacity.</h2>
                             <div class="clearfix"></div>
                             {% crispy form %}
                         </div>
