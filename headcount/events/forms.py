@@ -189,7 +189,6 @@ class RSVPForm(forms.ModelForm):
             if coming < self.instance.party_size:
                 return cleaned_data
 
-        if self.instance.pk:
             new_total = event.total_coming - self.instance.party_size + coming
         else:
             new_total = event.total_coming + coming
