@@ -54,9 +54,9 @@
                     </div>
                 </div>
             </article>
-        {% empty %}
-            <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
         {% endfor %}
+    {% else %}
+    <p><strong>You don't have any events!</strong> <a href="{% url 'events:create' %}">Why not make one?</a></p>
     {% endif %}
 
     {% if rsvps %}
