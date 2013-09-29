@@ -138,10 +138,6 @@ class RSVPForm(forms.ModelForm):
                 css_class='col-xs-12 col-md-6'
             )
         )
-        guests = Fieldset(u'num_guests',)
-        # import pdb; pdb.set_trace()
-        if event.max_guests > 0:
-            guests = ''
 
         self.helper = FormHelper()
         self.helper.form_method = u'POST'
@@ -154,9 +150,7 @@ class RSVPForm(forms.ModelForm):
                 u'event',
                 u'user',
                 u'response',
-            ),
-            guests,
-            Fieldset(
+                u'num_guests',
                 u'notes',
             ),
             actions

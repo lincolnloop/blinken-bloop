@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block scripts %}
+    {{ form.media }}
+{% endblock %}
+
 {% block content %}
 <div>
     <h2>{{ event.title }}</h2>
@@ -12,7 +16,11 @@
             {{ event.rsvps.possible|length }}
         {% endif %}
     </p>
-    <p>Max Guests: {{ event.max_guests }}</p>
+    {% if event.max_guests %}
+        <p id="max-{{ event.max_guests }}" class="max-guests">Max Guests: {{ event.max_guests }}</p>
+    {% else %}
+        <p id="max-0" class="max-guests" style="display: none;"></p>
+    {% endif %}
     {% if event.cost %}
     <p>Cost: {{ event.cost }}</p>
     {% endif %}
