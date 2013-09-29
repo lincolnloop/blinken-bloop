@@ -1,42 +1,22 @@
-{% extends "base.html" %}
+{% extends "events/rsvp_form.html" %}
 
-{% block content %}
-    <h2>{{ event.title }}</h2>
-    <p>{{ event.location }}</p>
-    <p>{{ event.start }} &ndash; {{ event.end }}</p>
-    {{ event.description_html|safe }}
+{% block edit_delete %}
+<span class="edit-delete pull-right">
+    <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+    <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
+</span>
+{% endblock %}
 
-    <hr>
+{% block host %}you!{% endblock %}
 
-    {% regroup event.rsvps.all by response as rsvp_set %}
-    {% if rsvp_set %}
+{% block side_column %}
+    {% if event.rsvps.all.count %}
+        <h2>Guest list
+            <span class="edit-delete pull-right"><a href="{% url 'events:detail_printable' event.shortid %}" class="help"><span class="glyphicon glyphicon-print"></span> Printable version</a></span>
+        </h2>
         <form method="POST">
             {% csrf_token %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Guests</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for rsvp in rsvp_set %}
-                        <tr>
-                            <th colspan="*">{{ rsvp.grouper|capfirst }}</th>
-                        </tr>
-                        {% for person in rsvp.list %}
-                            <tr>
-                                <td><input type="checkbox" name="delete_{{ person.id }}"></td>
-                                <td>{{ person.user.name }}</td>
-                                <td>{{ person.num_guests }}</td>
-                                <td>{{ person.notes }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% include 'events/_rsvp_table.html' %}
             <div class="form-actions">
                 <input type="submit" class="btn" value="Remove checked RSVPs">
             </div>

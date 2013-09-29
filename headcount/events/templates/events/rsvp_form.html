@@ -8,13 +8,18 @@
 {% block content %}
 <div class="event-page">
     <div class="col-xs-12 col-md-12">
-        <h1>{{ event.title }}</h1>
-        <p class="hosted-by">Hosted by {{ event.host.name }}</p>
+        <h1>{{ event.title }}
+            {% block edit_delete %}
+            {% endblock %}
+        </h1>
+        <p class="hosted-by">Hosted by {% block host %}{{ event.host.name }}{% endblock %}</p>
     </div>
 
     <div class="col-xs-12 col-md-6">
         <h3>Description</h3>
-        {{ event.description_html|safe }}
+        <div class="lots-of-text">
+            {{ event.description_html|safe }}
+        </div>
 
         <h3>When</h3>
         <p>From <strong>{{ event.start }}</strong> <br>
@@ -38,16 +43,18 @@
     </div>
 </div>
 
-{% if form %}
     <div class="rsvp-form col-xs-12 col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">RSVP now!</h3>
+        {% block side_column %}
+        {% if form %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">RSVP now!</h3>
+                </div>
+                <div class="panel-body">
+                    {% crispy form %}
+                </div>
             </div>
-            <div class="panel-body">
-                {% crispy form %}
-            </div>
-        </div>
+        {% endif %}
+        {% endblock %}
     </div>
-{% endif %}
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -6,6 +7,7 @@ from . import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.EventWizard.as_view(), name='home'),
+    url(r'^about/$', TemplateView.as_view(template_name="about.html")),
     url(r'^dashboard/$', views.Dashboard.as_view(), name='dashboard'),
     url(r'^event/new/$', views.CreateEvent.as_view(), name='create'),
     url(r'^event/edit/(?P<slug>\w+)/$', views.UpdateEvent.as_view(),
@@ -18,4 +20,6 @@ urlpatterns = patterns(
         name='update_rsvp'),
     url(r'event/detail/(?P<slug>\w+)/$', views.EventDetail.as_view(),
         name='detail'),
+    url(r'event/detail/(?P<slug>\w+)/printable/$', views.EventDetailPrintable.as_view(),
+        name='detail_printable'),
 )

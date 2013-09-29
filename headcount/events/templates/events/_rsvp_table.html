@@ -1,0 +1,22 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Response</th>
+            <th></th>
+            <th></th>
+            <th>Guests</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rsvp in event.rsvps.yes %}
+            {% include 'events/_rsvp_table_row.html' %}
+        {% endfor %}
+        {% for rsvp in event.rsvps.maybe %}
+            {% include 'events/_rsvp_table_row.html' %}
+        {% endfor %}
+        {% for rsvp in event.rsvps.no %}
+            {% include 'events/_rsvp_table_row.html' %}
+        {% endfor %}
+    </tbody>
+</table>

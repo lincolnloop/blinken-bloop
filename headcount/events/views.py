@@ -217,6 +217,13 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
                 'slug': self.get_object().shortid})
         )
 
+class EventDetailPrintable(EventDetail):
+    http_methods_allowed = ['get']
+    template_name = 'events/event_detail_printable.html'
+
+    def post():
+        pass
+
 
 class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
                  generic.UpdateView):

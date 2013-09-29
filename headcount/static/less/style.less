@@ -33,6 +33,7 @@ body {
     background: @bg-color;
     color: white;
     line-height: 1.8em;
+    margin: 0;
 }
 
 a {
@@ -46,6 +47,14 @@ a {
 
 .help {
     font-size: .8em;
+}
+
+.lots-of-text {
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
+    p {
+        margin-bottom: 1.5em;
+    }
 }
 
 h1, h2, h3, h4, h5 {
@@ -189,6 +198,18 @@ h4 {
     }
 }
 
+.edit-delete {
+    display: inline-block;
+    padding-top: 4px;
+    font-size: @font-size;
+    font-weight: 300;
+    font-family: @standard-font;
+
+    a {
+        margin-left: 15px;
+    }
+}
+
 .panel {
     .border-radius(15px);
     background: lighten(@bg-color, 3%);
@@ -209,18 +230,6 @@ h4 {
         border-top-right-radius: 15px;
         h3 {
             font-size: 2.4rem;
-
-            .edit-delete {
-                display: inline-block;
-                padding-top: 4px;
-                font-size: @font-size;
-                font-weight: 300;
-                font-family: @standard-font;
-
-                a {
-                    margin-left: 15px;
-                }
-            }
         }
     }
 

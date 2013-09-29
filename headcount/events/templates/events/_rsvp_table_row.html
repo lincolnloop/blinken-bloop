@@ -1,0 +1,7 @@
+<tr>
+    <td>{{ rsvp.response|capfirst }}</td>
+    <td><input type="checkbox" name="delete_{{ rsvp.id }}"></td>
+    <td>{{ rsvp.user }}</td>
+    <td>{% if rsvp.response = "no" %}N/A{% else %}{{ rsvp.num_guests}}{% endif %}</td>
+    <td>{{ rsvp.notes }}</td>
+</tr>
