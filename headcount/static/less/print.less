@@ -1,0 +1,77 @@
+@font-size: 12pt;
+
+@header-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
+@standard-font: 'Merriweather Sans', Arial, sans-serif;
+@bg-color: #222;
+@teal: #4dd2ff;
+@fuchsia: #ff33a0;
+@pink: #ffa9a9;
+@yellow: #e0ff66;
+@light-blue: #afb9ff;
+@light-green: #acff99;
+
+
+body {
+    font-family: @standard-font;
+    font-weight: 300;
+    font-size: @font-size;
+    background: white;
+    color: black;
+    line-height: 1.8em;
+    margin: 0 10px;
+    width: 900px;
+}
+
+.help {
+    font-size: .8em;
+}
+
+.lots-of-text {
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
+    p {
+        margin-bottom: 1.5em;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: @header-font;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 100;
+
+    &.splashy {
+        color: @teal;
+        font-weight: 700;
+    }
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h4 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+input {
+  display: none;
+}
+
+table {
+  width: 100%;
+
+  th {
+    border-bottom: 1pt solid black;
+  }
+}
