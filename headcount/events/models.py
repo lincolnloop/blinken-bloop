@@ -126,6 +126,14 @@ class Event(TimeStampedModel, TimeFramedModel):
         return sum(
             [peep.num_guests + 1 for peep in self.rsvps.maybe()])
 
+    @property
+    def is_event_full(self):
+        if self.max_attendees:
+            if self.max_attendees == self.total_coming:
+                return True
+
+        return False
+
 
 class RSVP(TimeStampedModel):
     RESPONSE_CHOICES = Choices(
