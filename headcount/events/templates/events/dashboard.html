@@ -18,7 +18,7 @@
                             {% else %}
                                 {{ event.rsvps.possible|length }}
                             {% endif %} RSVPs
-                            {% if event.rsvps.all|length %}: 
+                            {% if event.rsvps.all|length %}:
                                 {{ event.rsvps.yes|length }} yes{{ event.rsvps.yes|length|pluralize:"es" }}
                                 {% if event.rsvps.maybe|length %}, {{ event.rsvps.maybe|length }} maybe{{ event.rsvps.maybe|length|pluralize }}{% endif %}
                                 {% if event.rsvps.no|length %}, {{ event.rsvps.no|length }} no{{ event.rsvps.no|length|pluralize }}{% endif %}
