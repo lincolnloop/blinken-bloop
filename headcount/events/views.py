@@ -185,7 +185,8 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         context = super(EventDetailRSVP, self).get_context_data(**kwargs)
         context.update({
             'event': self.get_event(),
-            'domain': Site.objects.get_current().domain
+            'domain': Site.objects.get_current().domain,
+            'osm_api_key': getattr(settings, 'OSM_API_KEY'),
         })
 
         if self.request.user == context['event'].host:
@@ -221,7 +222,8 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
         """
         context = super(EventDetail, self).get_context_data(**kwargs)
         context.update({
-            'domain': Site.objects.get_current().domain
+            'domain': Site.objects.get_current().domain,
+            'osm_api_key': getattr(settings, 'OSM_API_KEY'),
         })
 
         return context

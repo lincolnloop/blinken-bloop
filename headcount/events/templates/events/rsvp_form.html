@@ -2,13 +2,6 @@
 {% load crispy_forms_tags %}
 
 {% block scripts %}
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-    <script src="{{ STATIC_URL }}js/maps.js"></script>
     {{ form.media }}
 {% endblock %}
 
@@ -35,7 +28,7 @@
         <h3>Where</h3>
         <p>{{ event.location }}</p>
         {% if event.latitude and event.longitude %}
-            <div id="map" data-long="{{ event.longitude }}" data-lat="{{ event.latitude }}"></div>
+            <img src="http://open.mapquestapi.com/staticmap/v4/getmap?key={{ osm_api_key }}&size=400,200&zoom=10&center={{ event.latitude }},{{ event.longitude }}&scalebar=false&mcenter={{ event.latitude }},{{ event.longitude }}">
         {% endif %}
 
         <h3>More info</h3>
