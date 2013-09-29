@@ -2,7 +2,7 @@ Headcount
 =========
 
 Lincoln Loop's entry for Django Dash 2013.
-[Live site](https://headcountio.herokuapp.com)
+[Live site](http://headcount.io)
 
 **Headcount** is a standalone service for handling ad hoc meetings and events that need basic RSVP capabilities.
 
