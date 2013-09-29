@@ -1,22 +1,26 @@
 from django.test import TestCase
 
+from authtools.models import User
+
 from .test_forms import create_event
-from .test_models import create_user
 
 
 class BaseTestCase(TestCase):
     def setUp(self):
-        self.user = create_user()
-        self.event = create_event()
+        self.user = self._create_user()
+        self.event = create_event(self.user)
 
-    def _login_user(self, username='', password=''):
+    def _create_user(self, email=u'test@example.com'):
+        return User.objects.create_user(
+            name='Tester McTesterson',
+            email=email,
+            password='test123',
+            is_active=True
+        )
+
+    def _login_user(self, email=u'test@example.com', password=u'test123'):
         self.assertTrue(
-            self.client.login(username=username, password=password))
+            self.client.login(email=email, password=password))
 
-    def _set_site_session_data(self, session, site):
-        session['current_site'] = {
-            'pk': site.pk,
-            'name': site.name,
-            'domain': site.domain
-        }
-        session.save()
+    def test_home_page(self):
+        self._login_user()
