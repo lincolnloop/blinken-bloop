@@ -237,22 +237,6 @@ h4 {
         h4 {
             margin-top: 0;
             margin-bottom: 1em;
-            span {
-                font-weight: 300;
-                &.yes {
-                    color: @teal;
-                }
-                &.maybe {
-                    color: @yellow;
-                }
-                &.no {
-                    color: @fuchsia;
-                }
-                &.rsvp-count {
-                    font-weight: 700;
-                    font-size: 1.4em;
-                }
-            }
         }
         .event-info {
             text-align: right;
@@ -304,6 +288,25 @@ h4 {
     .panel-footer {
         padding: 5px 15px;
     }
+}
+
+.panel-body, .your-rsvps {
+    span {
+            font-weight: 300;
+            &.yes {
+                color: @teal;
+            }
+            &.maybe {
+                color: @yellow;
+            }
+            &.no {
+                color: @fuchsia;
+            }
+            &.rsvp-count {
+                font-weight: 700;
+                font-size: 1.4em;
+            }
+        }
 }
 
 .event-page {
