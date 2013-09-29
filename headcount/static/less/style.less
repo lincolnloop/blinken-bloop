@@ -212,7 +212,7 @@ h4 {
 
 .panel {
     .border-radius(15px);
-    background: lighten(@bg-color, 3%);
+    background: lighten(@bg-color, 5%);
     border: 1pt solid black;
 
     .rsvp-url {
@@ -264,9 +264,13 @@ h4 {
                 width: 100%;
                 padding-bottom: 5px;
                 .columns();
-                div {
+                .the-rsvp {
                     margin-bottom: 5px;
                     padding: 0 0 0 5px;
+                    break-inside: avoid-column;
+                    -webkit-column-break-inside: avoid;
+                    -moz-column-break-inside: avoid;
+                    column-break-inside: avoid;
                 }
             }
 
@@ -276,7 +280,7 @@ h4 {
                 width: 1.6em;
                 height: 1.6em;
                 text-align: center;
-                color: lighten(@bg-color, 3%);
+                color: lighten(@bg-color, 5%);
                 font-weight: 700;
 
                 &.yes {
@@ -315,8 +319,15 @@ h4 {
     padding-bottom: 20px;
 }
 
-table tbody .notes-all > td {
-    border-top: none;
+.rsvp-table {
+    .highlight {
+        background: lighten(@bg-color, 5%);
+    }
+    tbody .notes-all {
+        > td {
+            border-top: none;
+        }
+    }
 }
 
 .footer {
