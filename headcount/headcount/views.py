@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
 from authtools import views as auth_views
+from authtools.models import User
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 
 from . import forms
@@ -16,8 +17,9 @@ class CustomLoginView(auth_views.LoginView):
     success_url = reverse_lazy('events:home')
 
 
-class RegisterView(FormValidMessageMixin, generic.FormView):
+class RegisterView(FormValidMessageMixin, generic.CreateView):
     form_class = forms.HeadcountUserCreationForm
     form_valid_message = 'Your account has been created!'
+    model = User
     success_url = reverse_lazy('accounts:login')
     template_name = "registration/register.html"
