@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from authtools.models import User
@@ -23,4 +24,8 @@ class BaseTestCase(TestCase):
             self.client.login(email=email, password=password))
 
     def test_home_page(self):
-        self._login_user()
+        url = reverse('events:home')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
