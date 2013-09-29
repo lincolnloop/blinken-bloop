@@ -39,6 +39,10 @@ class BaseTestCase(TestCase):
         self.assertTemplateUsed(response, 'events/event_form.html')
 
     def test_event_detail_edit_only_accessible_by_owner(self):
+        """
+        Test that event owner is the only person who can
+        access the edit page.
+        """
         evil_user = self._create_user(email=u'evil@example.com')
         self._login_user(email=evil_user.email)
 
