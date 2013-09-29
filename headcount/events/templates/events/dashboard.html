@@ -7,7 +7,7 @@
         <article class="col-md-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ event.title }}
+                    <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
                         <span class="edit-delete pull-right">
                             <a href="{% url 'events:edit' event.shortid %}">Edit</a>
                             <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
@@ -49,7 +49,7 @@
                             </div>
                         {% endfor %}
                         </div>
-                        <p><a href="{% url 'events:detail' event.shortid %}">Manage RSVPs</a></p>
+                        <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
                     </div>
                     <div class="col-md-6 event-info">
                         <p>{{ event.location }}</p>
