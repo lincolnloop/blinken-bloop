@@ -24,6 +24,7 @@ class BaseTestCase(TestCase):
             self.client.login(email=email, password=password))
 
     def test_home_page_anon(self):
+        """ Anon user should see form wizard page. """
         url = reverse('events:home')
         response = self.client.get(url)
 
@@ -31,6 +32,7 @@ class BaseTestCase(TestCase):
         self.assertTemplateUsed(response, 'home.html')
 
     def test_home_page_auth(self):
+        """ Authenticated user should be forwarded to event creation page. """
         self._login_user()
         url = reverse('events:home')
         response = self.client.get(url, follow=True)
