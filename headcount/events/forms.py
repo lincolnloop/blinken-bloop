@@ -9,7 +9,7 @@ from model_utils import Choices
 
 from . import models
 
-TIME_FORMAT = '%H:%M %p'
+TIME_FORMAT = '%H:%M'
 
 
 class EventForm(forms.ModelForm):
