@@ -29,7 +29,7 @@ class EventForm(forms.ModelForm):
             'max_attendees': forms.NumberInput(
                 attrs={'min': '0', 'max': '9999'}),
             'max_guests': forms.NumberInput(attrs={'min': '0', 'max': '99'}),
-            'host': forms.HiddenInput
+            'host': forms.HiddenInput,
         }
 
     class Media:
@@ -117,7 +117,8 @@ class RSVPForm(forms.ModelForm):
     class Meta:
         model = models.RSVP
         widgets = {
-            'response': forms.RadioSelect
+            'num_guests': forms.NumberInput,
+            'response': forms.RadioSelect,
         }
 
     def __init__(self, *args, **kwargs):

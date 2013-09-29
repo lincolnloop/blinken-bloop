@@ -5,7 +5,7 @@
 <div>
     <h2>{{ event.title }}</h2>
     {{ event.description_html|safe }}
-    <p>Max Attendees: {{ event.max_attendees }}</p>
+    <p>Attendees: {{ event.rsvps.possible|length }}/{{ event.max_attendees }}</p>
     <p>Max Guests: {{ event.max_guests }}</p>
     {% if event.cost %}
     <p>Cost: {{ event.cost }}</p>
