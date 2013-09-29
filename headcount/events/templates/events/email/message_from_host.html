@@ -1,0 +1,15 @@
+<h2>Hi!</h2>
+
+<p>{{ event.host.name }} wanted us to send you a note about <strong>{{ event.title }}</strong>.</p>
+
+{% if host_email %}<p>You can respond to him/her directly at: <a href="mailto:{{ host_email }}">{{ host_email }}</a>.</p>{% endif %}
+
+<p>The message is below:</p>
+
+{{ body_html|safe }}
+
+<hr>
+
+<p>Thanks!</p>
+
+<p>The Headcount.io Team</p>

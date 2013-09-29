@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block scripts %}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <h2>What would you like to say?</h2>
+    <p>You can send a message to all or some of the RSVPs for {{ event.title }}.</p>
+    {% crispy form %}
+{% endblock %}

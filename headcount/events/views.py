@@ -10,8 +10,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
+import misaka
 
 from headcount.forms import HeadcountUserCreationForm
+from headcount.utils import generate_email
 from . import forms
 from . import models
 
@@ -80,8 +82,9 @@ class DeleteEvent(LoginRequiredMixin, generic.DeleteView):
         return self.model.objects.by_host(host=self.request.user).upcoming()
 
     def delete(self, request, *args, **kwargs):
-        messages.success(request, _('OK, we deleted the event and notified all '
-                                    '"yes" or "maybe" RSVPs.'))
+        messages.success(
+            request, _('OK, we deleted the event and notified all "yes" '
+                       'or "maybe" RSVPs.'))
         return super(DeleteEvent, self).delete(request, *args, **kwargs)
 
 
@@ -217,6 +220,7 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
                 'slug': self.get_object().shortid})
         )
 
+
 class EventDetailPrintable(EventDetail):
     http_methods_allowed = ['get']
     template_name = 'events/event_detail_printable.html'
@@ -248,3 +252,55 @@ class RSVPUpdate(LoginRequiredMixin, FormValidMessageMixin,
                 user=self.request.user)
         except self.model.DoesNotExist:
             raise Http404
+
+
+class EmailRSVPs(LoginRequiredMixin, FormValidMessageMixin,
+                 generic.FormView):
+    form_class = forms.EmailForm
+    form_valid_message = 'Your message has been sent!'
+    success_url = reverse_lazy('events:dashboard')
+    template_name = "events/email_rsvps.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(EmailRSVPs, self).get_context_data(**kwargs)
+        try:
+            event = self.request.user.events.get(
+                shortid=self.kwargs.get('slug'))
+        except models.Event.DoesNotExist:
+            raise Http404
+        context.update({'event': event})
+        return context
+
+    def form_valid(self, form):
+        rsvps = form.cleaned_data.get('rsvps')
+        event = self.get_context_data().get('event')
+        selected_rsvps = event.rsvps.all()
+        if rsvps == 'yes':
+            selected_rsvps = event.rsvps.yes()
+        elif rsvps == 'no':
+            selected_rsvps = event.rsvps.no()
+        elif rsvps == 'maybe':
+            selected_rsvps = event.rsvps.maybe()
+        elif rsvps == 'possible':
+            selected_rsvps = event.rsvps.possible()
+
+        to_emails = ['{0.name} <{0.email}>'.format(rsvp.user) for
+                     rsvp in selected_rsvps]
+        host_email = event.host.email if form.cleaned_data.get(
+            'include_email_address') else None
+
+        email = generate_email(
+            'events/email/message_from_host',
+            self.request,
+            {
+                'subject': form.cleaned_data.get('subject'),
+                'body': form.cleaned_data.get('body'),
+                'body_html': misaka.html(form.cleaned_data.get('body')),
+                'host_email': host_email,
+                'event': event,
+                'domain': Site.objects.get_current().domain
+            },
+            to=to_emails
+        )
+        email.send(fail_silently=True)
+        return super(EmailRSVPs, self).form_valid(form)
