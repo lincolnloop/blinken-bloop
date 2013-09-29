@@ -109,6 +109,7 @@ class EventForm(forms.ModelForm):
         if end and start and end < start:
             raise forms.ValidationError(
                 _("Events can't end before they've started."))
+
         return cleaned_data
 
 
@@ -156,3 +157,26 @@ class RSVPForm(forms.ModelForm):
             self.fields['event'].widget = forms.HiddenInput()
             self.fields['user'].initial = self.instance.user_id
             self.fields['user'].widget = forms.HiddenInput()
+
+    def clean(self):
+        cleaned_data = super(RSVPForm, self).clean()
+        event = cleaned_data.get('event')
+        coming = cleaned_data.get('num_guests', 0) + 1
+
+        if self.instance.pk:
+            pass
+        else:
+            if event.total_coming >= event.max_attendees:
+                raise forms.ValidationError(
+                    _("We're sorry, the maximum number of guests has "
+                        "been reached."))
+
+            new_total = event.total_coming + coming
+            if new_total > event.max_attendees:
+                left = event.max_attendees - event.total_coming
+
+                raise forms.ValidationError(
+                    _("We're sorry, there are only {0} space(s) left.".format(
+                        left)))
+
+        return cleaned_data
