@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.formtools.wizard.views import SessionWizardView
@@ -12,11 +13,30 @@ from django.views import generic
 from authtools.models import User
 from braces.views import LoginRequiredMixin, FormValidMessageMixin
 import misaka
+import requests
 
 from headcount.forms import HeadcountUserCreationForm
 from headcount.utils import generate_email
 from . import forms
 from . import models
+
+
+class MapMixin(object):
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+
+        if form.cleaned_data.get('show_on_map'):
+            url = ('http://open.mapquestapi.com/geocoding/v1/address?key={0}'
+                   '&location={1}'.format(
+                       getattr(settings, 'OSM_API_KEY'),
+                       form.cleaned_data.get('location')
+                   ))
+            req = requests.get(url).json()['results'][0][
+                'locations'][0]['latLng']
+            obj.latitude = req['lat']
+            obj.longitude = req['lng']
+
+        return super(MapMixin, self).form_valid(form)
 
 
 class Dashboard(LoginRequiredMixin, generic.DetailView):
@@ -38,7 +58,7 @@ class Dashboard(LoginRequiredMixin, generic.DetailView):
 
 
 class CreateEvent(LoginRequiredMixin, FormValidMessageMixin,
-                  generic.CreateView):
+                  MapMixin, generic.CreateView):
     form_class = forms.EventForm
     form_valid_message = u'Your event was created!'
     model = models.Event
@@ -165,7 +185,8 @@ class EventDetailRSVP(LoginRequiredMixin, FormValidMessageMixin,
         context = super(EventDetailRSVP, self).get_context_data(**kwargs)
         context.update({
             'event': self.get_event(),
-            'domain': Site.objects.get_current().domain
+            'domain': Site.objects.get_current().domain,
+            'osm_api_key': getattr(settings, 'OSM_API_KEY'),
         })
 
         if self.request.user == context['event'].host:
@@ -201,7 +222,8 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
         """
         context = super(EventDetail, self).get_context_data(**kwargs)
         context.update({
-            'domain': Site.objects.get_current().domain
+            'domain': Site.objects.get_current().domain,
+            'osm_api_key': getattr(settings, 'OSM_API_KEY'),
         })
 
         return context

@@ -27,6 +27,9 @@
 
         <h3>Where</h3>
         <p>{{ event.location }}</p>
+        {% if event.latitude and event.longitude %}
+            <img src="http://open.mapquestapi.com/staticmap/v4/getmap?key={{ osm_api_key }}&size=400,200&zoom=10&center={{ event.latitude }},{{ event.longitude }}&scalebar=false&mcenter={{ event.latitude }},{{ event.longitude }}">
+        {% endif %}
 
         <h3>More info</h3>
         <p>Currently attending: <strong>{{ event.total_coming }}{% if event.max_attendees %}/{{ event.max_attendees }}{% endif %}</strong></p>
