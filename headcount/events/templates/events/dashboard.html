@@ -7,33 +7,35 @@
         <article class="col-md-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ event.title }}</h3>
-                    <p><a href="{% url 'events:detail' event.shortid %}">Manage RSVPs</a> | <a href="http://{{ domain }}{{ event.get_absolute_url }}">RSVP URL</a></p>
+                    <h3 class="panel-title"><a href="{% url 'events:detail' event.shortid %}">{{ event.title }}</a>
+                        <span class="edit-delete pull-right">
+                            <a href="{% url 'events:edit' event.shortid %}">Edit</a>
+                            <a href="{% url 'events:delete' event.shortid %}" class="text-danger">Delete</a>
+                        </span>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6 rsvp-info">
                         <h4>
                             {% if event.max_attendees %}
-                                {{ event.rsvps.possible|length }}/{{ event.max_attendees }}
+                                {{ event.total_coming }}/{{ event.max_attendees }}
                             {% else %}
-                                {{ event.rsvps.possible|length }}
+                                {{ event.total_coming }}
                             {% endif %} RSVPs
                             {% if event.rsvps.all|length %}:
-                                {{ event.rsvps.yes|length }} yes{{ event.rsvps.yes|length|pluralize:"es" }}
-                                {% if event.rsvps.maybe|length %}, {{ event.rsvps.maybe|length }} maybe{{ event.rsvps.maybe|length|pluralize }}{% endif %}
-                                {% if event.rsvps.no|length %}, {{ event.rsvps.no|length }} no{{ event.rsvps.no|length|pluralize }}{% endif %}
+                                {{ event.yes_coming }} <span class="yes">yes{{ event.yes_coming|pluralize:"es" }}</span>
+                                {% if event.rsvps.maybe|length %}
+                                    , {{ event.maybe_coming }} <span class="maybe">maybe{{ event.maybe_coming|pluralize }}</span>
+                                {% endif %}
+                                {% if event.rsvps.no|length %}
+                                    , {{ event.rsvps.no|length }} <span class="no">no{{ event.rsvps.no|length|pluralize }}</span>
+                                {% endif %}
                             {% endif %}
                         </h4>
                         <div class="rsvps">
-                        {% for rsvp in event.rsvps.all %}
-                                <div>
-                                {% if rsvp.response == 'yes' %}
-                                    <span class="response yes">Y</span>
-                                {% elif rsvp.response == 'maybe' %}
-                                    <span class="response maybe">?</span>
-                                {% else %}
-                                    <span class="response no">N</span>
-                                {% endif %}
+                        {% for rsvp in event.rsvps.yes %}
+                            <div>
+                                <span class="response yes">Y</span>
                                 {% if rsvp.user.name %}
                                     {{ rsvp.user.name }}
                                 {% else %}
@@ -44,7 +46,31 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
+                        {% for rsvp in event.rsvps.maybe %}
+                            <div>
+                                <span class="response maybe">?</span>
+                                {% if rsvp.user.name %}
+                                    {{ rsvp.user.name }}
+                                {% else %}
+                                    {{ rsvp.user.email }}
+                                {% endif %}
+                                {% if rsvp.num_guests %}
+                                    <span class="guests"> + {{ rsvp.num_guests }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        {% for rsvp in event.rsvps.no %}
+                            <div>
+                                <span class="response no">N</span>
+                                {% if rsvp.user.name %}
+                                    {{ rsvp.user.name }}
+                                {% else %}
+                                    {{ rsvp.user.email }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
                         </div>
+                        <p><a href="{% url 'events:detail' event.shortid %}" class="help">Manage RSVPs</a></p>
                     </div>
                     <div class="col-md-6 event-info">
                         <p>{{ event.location }}</p>
@@ -52,8 +78,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <a href="{% url 'events:edit' event.shortid %}">Edit</a>
-                    <a href="{% url 'events:delete' event.shortid %}" class="text-danger pull-right">Delete</a>
+                    <span class="rsvp-url">Shareable RSVP URL: <a href="{{ event.get_absolute_url }}">http://{{ domain }}{{ event.get_absolute_url }}</a></span>
                 </div>
             </div>
         </article>

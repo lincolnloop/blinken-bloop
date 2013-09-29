@@ -79,7 +79,7 @@ class Event(TimeStampedModel, TimeFramedModel):
         help_text=_('Leave blank for no limit'), null=True)
     cost = models.CharField(_('Do people need to bring anything, or pay?'),
                             blank=True, default='', max_length=150)
-    shortid = models.CharField(blank=True, default='', max_length=10)
+    shortid = models.CharField(blank=True, editable=False, max_length=10)
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
 
     class Meta:
@@ -106,9 +106,21 @@ class Event(TimeStampedModel, TimeFramedModel):
 
     @property
     def total_coming(self):
-        """ Return total number of poeple coming """
+        """ Return total number of people coming """
         return sum(
             [peep.num_guests + 1 for peep in self.rsvps.possible()])
+
+    @property
+    def yes_coming(self):
+        """ Return total number of people for sure coming """
+        return sum(
+            [peep.num_guests + 1 for peep in self.rsvps.yes()])
+
+    @property
+    def maybe_coming(self):
+        """ Return total number of people who may be coming """
+        return sum(
+            [peep.num_guests + 1 for peep in self.rsvps.maybe()])
 
 
 class RSVP(TimeStampedModel):

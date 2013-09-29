@@ -1,14 +1,33 @@
+@font-size: 12pt;
+
 @header-font: 'Raleway', 'Merriweather Sans', Arial, sans-serif;
 @standard-font: 'Merriweather Sans', Arial, sans-serif;
 @bg-color: #222;
 @teal: #4dd2ff;
 @fuchsia: #ff33a0;
-@pink: #ffaaaf;
+@pink: #ffa9a9;
+@yellow: #e0ff66;
+
+.border-radius (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.columns(@cols: 2) {
+    -moz-column-count: @cols;
+    -webkit-column-count: @cols;
+    -ms-column-count: @cols;
+    -o-column-count: @cols;
+    column-count: @cols;
+}
 
 body {
     font-family: @standard-font;
     font-weight: 300;
-    font-size: 12pt;
+    font-size: @font-size;
     background: @bg-color;
     color: white;
     line-height: 1.8em;
@@ -23,6 +42,10 @@ a {
     }
 }
 
+.help {
+    font-size: .8em;
+}
+
 h1, h2, h3, h4, h5 {
     font-family: @header-font;
 }
@@ -35,6 +58,7 @@ h1 {
 h2 {
     font-size: 3rem;
     font-weight: 200;
+    margin-bottom: 20px;
 }
 
 h3 {
@@ -87,6 +111,11 @@ h4 {
 .panel {
     background: lighten(@bg-color, 3%);
     border: 1pt solid black;
+
+    .rsvp-url {
+        font-size: @font-size;
+    }
+
     .panel-heading, .panel-footer {
         background: black;
         color: white;
@@ -96,12 +125,37 @@ h4 {
     .panel-heading {
         h3 {
             font-size: 2.4rem;
+
+            .edit-delete {
+                display: inline-block;
+                padding-top: 4px;
+                font-size: @font-size;
+                font-weight: 300;
+                font-family: @standard-font;
+
+                a {
+                    margin-left: 15px;
+                }
+            }
         }
     }
 
     .panel-body {
         h4 {
             margin-top: 0;
+            margin-bottom: 15px;
+            span {
+                font-weight: 300;
+                &.yes {
+                    color: @teal;
+                }
+                &.maybe {
+                    color: @yellow;
+                }
+                &.no {
+                    color: @fuchsia;
+                }
+            }
         }
         .event-info {
             text-align: right;
@@ -111,9 +165,8 @@ h4 {
             .rsvps {
                 display: block;
                 width: 100%;
-                -moz-column-count: 2;
-                -webkit-column-count: 2;
-                column-count: 2;
+                padding-bottom: 5px;
+                .columns();
                 div {
                     margin-bottom: 5px;
                     padding: 0 0 0 5px;
@@ -121,23 +174,23 @@ h4 {
             }
 
             .response {
+                .border-radius(15px);
                 display: inline-block;
                 width: 1.6em;
                 height: 1.6em;
                 text-align: center;
-                border-radius: 5px;
                 color: lighten(@bg-color, 3%);
                 font-weight: 700;
-            }
 
-            .yes {
-                background: @teal;
-            }
-            .maybe {
-                background: #e0ff66;
-            }
-            .no {
-                background: red;
+                &.yes {
+                    background: @teal;
+                }
+                &.maybe {
+                    background: @yellow;
+                }
+                &.no {
+                    background: @fuchsia;
+                }
             }
 
             .guests {
@@ -158,6 +211,7 @@ h4 {
         list-style-type: none;
         padding: 0;
         li {
+            .help();
             display: inline-block;
             padding: 4px 15px 4px 0;
         }
