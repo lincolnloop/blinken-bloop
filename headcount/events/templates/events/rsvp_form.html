@@ -17,7 +17,7 @@
         {% endif %}
     </p>
     {% if event.max_guests %}
-        <p id="max-{{ event.max_guests }}" class="max-guests">Max Guests: {{ event.max_guests }}</p>
+        <p id="max-{{ event.max_guests }}" class="max-guests">Max guests: {{ event.max_guests }}</p>
     {% else %}
         <p id="max-0" class="max-guests" style="display: none;"></p>
     {% endif %}
@@ -27,6 +27,8 @@
 </div>
 
 {% if form %}
-    {% crispy form %}
+    <div class="rsvp-form">
+        {% crispy form %}
+    </div>
 {% endif %}
 {% endblock %}

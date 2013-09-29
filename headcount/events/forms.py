@@ -135,7 +135,7 @@ class RSVPForm(forms.ModelForm):
             Div(
                 Submit('save', _('RSVP'),
                     css_class='primary btn-lg btn-block'),
-                css_class='col-xs-12 col-md-6'
+                css_class='col-xs-12 col-md-12'
             )
         )
 
