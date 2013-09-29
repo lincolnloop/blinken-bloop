@@ -3,7 +3,7 @@
     <td><input type="checkbox" name="delete_{{ rsvp.id }}"></td>
     <td>{{ rsvp.user.name }}<br>{{ rsvp.user.email }}</td>
     <td>{% if rsvp.response = "no" %}N/A{% else %}{{ rsvp.num_guests}}{% endif %}</td>
-    <td><a href="#" class="notes-truncated"><span class="glyphicon glyphicon-envelope"></span></a></td>
+    <td>{% if rsvp.notes %}<a href="#" class="notes-truncated"><span class="glyphicon glyphicon-envelope">{% endif %}</span></a></td>
 </tr>
 <tr id="notes-{{ rsvp.pk }}" class="notes-all">
     <td></td>
