@@ -23,6 +23,9 @@ class EventForm(forms.ModelForm):
         input_time_formats=[TIME_FORMAT],
         widget=forms.SplitDateTimeWidget(time_format=TIME_FORMAT)
     )
+    show_on_map = forms.BooleanField(initial=True,
+                                     help_text=_('Event location is mappable'),
+                                     label=_('Show a map?'))
 
     class Meta:
         model = models.Event
@@ -81,21 +84,25 @@ class EventForm(forms.ModelForm):
                 u'host',
                 u'title',
                 u'location',
+                u'show_on_map',
                 u'description',
                 Div(
                     Div(u'start',
-                        css_class=u'col-xs-12 col-md-4 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-4 '
+                        'col-md-offset-3 no-horizontal'),
                     Div(u'end',
                         css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     css_class=u'row'
                 ),
                 Div(
                     Div(u'max_attendees',
-                        css_class=u'col-xs-12 col-md-4 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-4 '
+                        'col-md-offset-3 no-horizontal'),
                     Div(u'max_guests',
                         css_class=u'col-xs-12 col-md-4 no-horizontal'),
                     Div(u'cost',
-                        css_class=u'col-xs-12 col-md-8 col-md-offset-3 no-horizontal'),
+                        css_class=u'col-xs-12 col-md-8 '
+                        'col-md-offset-3 no-horizontal'),
                     css_class=u'row'
                 ),
             ),
