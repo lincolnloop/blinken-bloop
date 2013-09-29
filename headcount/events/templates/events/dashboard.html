@@ -29,15 +29,9 @@
                             {% endif %}
                         </h4>
                         <div class="rsvps">
-                        {% for rsvp in event.rsvps.all %}
+                        {% for rsvp in event.rsvps.yes %}
                             <div>
-                                {% if rsvp.response == 'yes' %}
-                                    <span class="response yes">Y</span>
-                                {% elif rsvp.response == 'maybe' %}
-                                    <span class="response maybe">?</span>
-                                {% else %}
-                                    <span class="response no">N</span>
-                                {% endif %}
+                                <span class="response yes">Y</span>
                                 {% if rsvp.user.name %}
                                     {{ rsvp.user.name }}
                                 {% else %}
@@ -45,6 +39,29 @@
                                 {% endif %}
                                 {% if rsvp.num_guests %}
                                     <span class="guests"> + {{ rsvp.num_guests }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        {% for rsvp in event.rsvps.maybe %}
+                            <div>
+                                <span class="response maybe">?</span>
+                                {% if rsvp.user.name %}
+                                    {{ rsvp.user.name }}
+                                {% else %}
+                                    {{ rsvp.user.email }}
+                                {% endif %}
+                                {% if rsvp.num_guests %}
+                                    <span class="guests"> + {{ rsvp.num_guests }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        {% for rsvp in event.rsvps.no %}
+                            <div>
+                                <span class="response no">N</span>
+                                {% if rsvp.user.name %}
+                                    {{ rsvp.user.name }}
+                                {% else %}
+                                    {{ rsvp.user.email }}
                                 {% endif %}
                             </div>
                         {% endfor %}

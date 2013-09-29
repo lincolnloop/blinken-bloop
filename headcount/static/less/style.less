@@ -6,6 +6,7 @@
 @teal: #4dd2ff;
 @fuchsia: #ff33a0;
 @pink: #ffaaaf;
+@yellow: #e0ff66;
 
 .border-radius (@radius: 5px) {
   -webkit-border-radius: @radius;
@@ -13,6 +14,14 @@
   -ms-border-radius: @radius;
   -o-border-radius: @radius;
   border-radius: @radius;
+}
+
+.columns(@cols: 2) {
+    -moz-column-count: @cols;
+    -webkit-column-count: @cols;
+    -ms-column-count: @cols;
+    -o-column-count: @cols;
+    column-count: @cols;
 }
 
 body {
@@ -49,6 +58,7 @@ h1 {
 h2 {
     font-size: 3rem;
     font-weight: 200;
+    margin-bottom: 20px;
 }
 
 h3 {
@@ -133,6 +143,7 @@ h4 {
     .panel-body {
         h4 {
             margin-top: 0;
+            margin-bottom: 15px;
         }
         .event-info {
             text-align: right;
@@ -142,9 +153,8 @@ h4 {
             .rsvps {
                 display: block;
                 width: 100%;
-                -moz-column-count: 2;
-                -webkit-column-count: 2;
-                column-count: 2;
+                padding-bottom: 5px;
+                .columns();
                 div {
                     margin-bottom: 5px;
                     padding: 0 0 0 5px;
@@ -165,10 +175,10 @@ h4 {
                 background: @teal;
             }
             .maybe {
-                background: #e0ff66;
+                background: @yellow;
             }
             .no {
-                background: red;
+                background: @fuchsia;
             }
 
             .guests {
@@ -189,6 +199,7 @@ h4 {
         list-style-type: none;
         padding: 0;
         li {
+            .help();
             display: inline-block;
             padding: 4px 15px 4px 0;
         }
