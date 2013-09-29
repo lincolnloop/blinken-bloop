@@ -50,5 +50,10 @@ class BaseTestCase(TestCase):
 
         url = reverse('events:edit', kwargs={'slug': self.event.shortid})
         response = self.client.get(url)
-
         self.assertEqual(response.status_code, 404)
+
+    def test_event_detail_accesible_by_owner(self):
+        self._login_user()
+        url = reverse('events:edit', kwargs={'slug': self.event.shortid})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
